@@ -355,8 +355,8 @@ autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 
 
 " fzf config
-nnoremap <leader>fz :FZF<CR>
-nnoremap <leader>ff :CocCommand fzf-preview.DirectoryFiles<CR>
+" nnoremap <leader>fz :FZF<CR>
+nnoremap <leader>fz :CocCommand fzf-preview.DirectoryFiles<CR>
 " ProjectGrep 后面跟需要grep的参数
 nnoremap <leader>fg :CocCommand fzf-preview.ProjectGrep 
 nnoremap <leader>fb :CocCommand fzf-preview.AllBuffers<CR>
