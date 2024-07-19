@@ -70,6 +70,10 @@ vim.keymap.set('n', '<leader><Tab>', "<cmd>bNext<CR>", { noremap = true })
 -- 关闭buffer
 vim.keymap.set('n', '<C-w>', "<cmd>bdelete<CR>", { noremap = true })
 
+-- 方便浏览代码
+vim.keymap.set('n', '<C-j>', "jzz", { noremap = true })
+vim.keymap.set('n', '<C-k>', "kzz", { noremap = true })
+
 
 -- ----visual---- --
 -- 整行移动 巨好用

@@ -1,3 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
-cp -r ./local-version/nvim ~/.config/
+git clone -b nvim https://github.com/SeaHI-Robot/highvim.git ~/.config/nvim/
+
+alias nv='~/.config/nvim/nvim-linux64/bin/nvim'
+
+nv
