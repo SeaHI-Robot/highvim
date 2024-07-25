@@ -10,6 +10,21 @@ vim.keymap.set("i", "jf", "<ESC>", { noremap = true })
 -- vim.keymap.set("i", "\'", "\'\'<ESC>i", { noremap = true })
 -- vim.keymap.set("i", "\"", "\"\"<ESC>i", { noremap = true })
 vim.keymap.set("i", "<", "<><ESC>i", { noremap = true })
+vim.keymap.set("i", "<C-j>", "<down>", { noremap = true })
+vim.keymap.set("i", "<C-k>", "<up>", { noremap = true })
+vim.keymap.set("i", "<C-b>", "<left>", { noremap = true })
+vim.keymap.set("i", "<C-f>", "<right>", { noremap = true })
+vim.keymap.set("i", "<C-a>", "<home>", { noremap = true })
+vim.keymap.set("i", "<C-e>", "<end>", { noremap = true })
+
+
+-- ----Cmd---- --
+vim.keymap.set("c", "<C-j>", "<down>", { noremap = true })
+vim.keymap.set("c", "<C-k>", "<up>", { noremap = true })
+vim.keymap.set("c", "<C-b>", "<left>", { noremap = true })
+vim.keymap.set("c", "<C-f>", "<right>", { noremap = true })
+vim.keymap.set("c", "<C-a>", "<home>", { noremap = true })
+vim.keymap.set("c", "<C-e>", "<end>", { noremap = true })
 
 
 -- ----Normal---- --
