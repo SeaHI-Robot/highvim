@@ -64,6 +64,8 @@ lsp._request_name_to_capability = {
   [ms.textDocument_inlayHint] = { 'inlayHintProvider' },
   [ms.textDocument_diagnostic] = { 'diagnosticProvider' },
   [ms.inlayHint_resolve] = { 'inlayHintProvider', 'resolveProvider' },
+  [ms.textDocument_documentLink] = { 'documentLinkProvider' },
+  [ms.documentLink_resolve] = { 'documentLinkProvider', 'resolveProvider' },
 }
 
 -- TODO improve handling of scratch buffers with LSP attached.
@@ -373,7 +375,7 @@ local function reset_defaults(bufnr)
   end
   api.nvim_buf_call(bufnr, function()
     local keymap = vim.fn.maparg('K', 'n', false, true)
-    if keymap and keymap.callback == vim.lsp.buf.hover then
+    if keymap and keymap.callback == vim.lsp.buf.hover and keymap.buffer == 1 then
       vim.keymap.del('n', 'K', { buffer = bufnr })
     end
   end)
@@ -385,8 +387,8 @@ end
 local function on_client_exit(code, signal, client_id)
   local client = all_clients[client_id]
 
-  for bufnr in pairs(client.attached_buffers) do
-    vim.schedule(function()
+  vim.schedule(function()
+    for bufnr in pairs(client.attached_buffers) do
       if client and client.attached_buffers[bufnr] then
         api.nvim_exec_autocmds('LspDetach', {
           buffer = bufnr,
@@ -395,15 +397,16 @@ local function on_client_exit(code, signal, client_id)
         })
       end
 
-      local namespace = vim.lsp.diagnostic.get_namespace(client_id)
-      vim.diagnostic.reset(namespace, bufnr)
       client.attached_buffers[bufnr] = nil
 
       if #lsp.get_clients({ bufnr = bufnr, _uninitialized = true }) == 0 then
         reset_defaults(bufnr)
       end
-    end)
-  end
+    end
+
+    local namespace = vim.lsp.diagnostic.get_namespace(client_id)
+    vim.diagnostic.reset(namespace)
+  end)
 
   local name = client.name or 'unknown'
 
@@ -495,6 +498,29 @@ local function text_document_did_save_handler(bufnr)
   end
 end
 
+---@param bufnr integer resolved buffer
+---@param client vim.lsp.Client
+local function buf_detach_client(bufnr, client)
+  api.nvim_exec_autocmds('LspDetach', {
+    buffer = bufnr,
+    modeline = false,
+    data = { client_id = client.id },
+  })
+
+  changetracking.reset_buf(client, bufnr)
+
+  if vim.tbl_get(client.server_capabilities, 'textDocumentSync', 'openClose') then
+    local uri = vim.uri_from_bufnr(bufnr)
+    local params = { textDocument = { uri = uri } }
+    client.notify(ms.textDocument_didClose, params)
+  end
+
+  client.attached_buffers[bufnr] = nil
+
+  local namespace = lsp.diagnostic.get_namespace(client.id)
+  vim.diagnostic.reset(namespace, bufnr)
+end
+
 --- @type table<integer,true>
 local attached_buffers = {}
 
@@ -547,36 +573,34 @@ local function buf_attach(bufnr)
   api.nvim_buf_attach(bufnr, false, {
     on_lines = function(_, _, changedtick, firstline, lastline, new_lastline)
       if #lsp.get_clients({ bufnr = bufnr }) == 0 then
-        return true -- detach
+        -- detach if there are no clients
+        return #lsp.get_clients({ bufnr = bufnr, _uninitialized = true }) == 0
       end
       util.buf_versions[bufnr] = changedtick
       changetracking.send_changes(bufnr, firstline, lastline, new_lastline)
     end,
 
     on_reload = function()
+      local clients = lsp.get_clients({ bufnr = bufnr })
       local params = { textDocument = { uri = uri } }
-      for _, client in ipairs(lsp.get_clients({ bufnr = bufnr })) do
+      for _, client in ipairs(clients) do
         changetracking.reset_buf(client, bufnr)
         if vim.tbl_get(client.server_capabilities, 'textDocumentSync', 'openClose') then
           client.notify(ms.textDocument_didClose, params)
         end
+      end
+      for _, client in ipairs(clients) do
         client:_text_document_did_open_handler(bufnr)
       end
     end,
 
     on_detach = function()
-      local params = { textDocument = { uri = uri } }
-      for _, client in ipairs(lsp.get_clients({ bufnr = bufnr })) do
-        changetracking.reset_buf(client, bufnr)
-        if vim.tbl_get(client.server_capabilities, 'textDocumentSync', 'openClose') then
-          client.notify(ms.textDocument_didClose, params)
-        end
+      local clients = lsp.get_clients({ bufnr = bufnr, _uninitialized = true })
+      for _, client in ipairs(clients) do
+        buf_detach_client(bufnr, client)
       end
-      for _, client in ipairs(all_clients) do
-        client.attached_buffers[bufnr] = nil
-      end
-      util.buf_versions[bufnr] = nil
       attached_buffers[bufnr] = nil
+      util.buf_versions[bufnr] = nil
     end,
 
     -- TODO if we know all of the potential clients ahead of time, then we
@@ -650,27 +674,9 @@ function lsp.buf_detach_client(bufnr, client_id)
       )
     )
     return
+  else
+    buf_detach_client(bufnr, client)
   end
-
-  api.nvim_exec_autocmds('LspDetach', {
-    buffer = bufnr,
-    modeline = false,
-    data = { client_id = client_id },
-  })
-
-  changetracking.reset_buf(client, bufnr)
-
-  if vim.tbl_get(client.server_capabilities, 'textDocumentSync', 'openClose') then
-    local uri = vim.uri_from_bufnr(bufnr)
-    local params = { textDocument = { uri = uri } }
-    client.notify(ms.textDocument_didClose, params)
-  end
-
-  client.attached_buffers[bufnr] = nil
-  util.buf_versions[bufnr] = nil
-
-  local namespace = lsp.diagnostic.get_namespace(client_id)
-  vim.diagnostic.reset(namespace, bufnr)
 end
 
 --- Checks if a buffer is attached for a particular client.
@@ -844,17 +850,20 @@ api.nvim_create_autocmd('VimLeavePre', {
 ---@param params table|nil Parameters to send to the server
 ---@param handler? lsp.Handler See |lsp-handler|
 ---       If nil, follows resolution strategy defined in |lsp-handler-configuration|
----
+---@param on_unsupported? fun()
+---       The function to call when the buffer has no clients that support the given method.
+---       Defaults to an `ERROR` level notification.
 ---@return table<integer, integer> client_request_ids Map of client-id:request-id pairs
 ---for all successful requests.
 ---@return function _cancel_all_requests Function which can be used to
 ---cancel all the requests. You could instead
 ---iterate all clients and call their `cancel_request()` methods.
-function lsp.buf_request(bufnr, method, params, handler)
+function lsp.buf_request(bufnr, method, params, handler, on_unsupported)
   validate({
     bufnr = { bufnr, 'n', true },
     method = { method, 's' },
     handler = { handler, 'f', true },
+    on_unsupported = { on_unsupported, 'f', true },
   })
 
   bufnr = resolve_bufnr(bufnr)
@@ -876,7 +885,11 @@ function lsp.buf_request(bufnr, method, params, handler)
 
   -- if has client but no clients support the given method, notify the user
   if next(clients) and not method_supported then
-    vim.notify(lsp._unsupported_method(method), vim.log.levels.ERROR)
+    if on_unsupported == nil then
+      vim.notify(lsp._unsupported_method(method), vim.log.levels.ERROR)
+    else
+      on_unsupported()
+    end
     vim.cmd.redraw()
     return {}, function() end
   end

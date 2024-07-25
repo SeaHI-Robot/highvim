@@ -315,7 +315,7 @@ local function select_tabstop(tabstop)
     move_cursor_to(range[1] + 1, range[2] + 1)
     feedkeys('v')
     move_cursor_to(range[3] + 1, range[4])
-    feedkeys('o<c-g>')
+    feedkeys('o<c-g><c-r>_')
   end
 end
 
@@ -395,6 +395,15 @@ local function setup_autocmds(bufnr)
       end
     end,
   })
+
+  vim.api.nvim_create_autocmd('BufLeave', {
+    group = snippet_group,
+    desc = 'Stop the snippet session when leaving the buffer',
+    buffer = bufnr,
+    callback = function()
+      M.stop()
+    end,
+  })
 end
 
 --- Expands the given snippet text.
@@ -444,7 +453,7 @@ function M.expand(input)
     local snippet_lines = text_to_lines(snippet_text)
     -- Get the base indentation based on the current line and the last line of the snippet.
     if #snippet_lines > 0 then
-      base_indent = base_indent .. (snippet_lines[#snippet_lines]:match('(^%s*)%S') or '') --- @type string
+      base_indent = base_indent .. (snippet_lines[#snippet_lines]:match('(^%s+)%S') or '') --- @type string
     end
 
     local shiftwidth = vim.fn.shiftwidth()

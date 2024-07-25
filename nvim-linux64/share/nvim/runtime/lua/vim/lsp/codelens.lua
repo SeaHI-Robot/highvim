@@ -164,7 +164,7 @@ function M.display(lenses, bufnr, client_id)
       return a.range.start.character < b.range.start.character
     end)
     for j, lens in ipairs(line_lenses) do
-      local text = lens.command and lens.command.title or 'Unresolved lens ...'
+      local text = (lens.command and lens.command.title or 'Unresolved lens ...'):gsub('%s+', ' ')
       table.insert(chunks, { text, 'LspCodeLens' })
       if j < num_line_lenses then
         table.insert(chunks, { ' | ', 'LspCodeLensSeparator' })
@@ -307,7 +307,13 @@ function M.refresh(opts)
       }
       active_refreshes[buf] = true
 
-      local request_ids = vim.lsp.buf_request(buf, ms.textDocument_codeLens, params, M.on_codelens)
+      local request_ids = vim.lsp.buf_request(
+        buf,
+        ms.textDocument_codeLens,
+        params,
+        M.on_codelens,
+        function() end
+      )
       if vim.tbl_isempty(request_ids) then
         active_refreshes[buf] = nil
       end

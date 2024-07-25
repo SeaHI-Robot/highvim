@@ -182,7 +182,7 @@ local validate = vim.validate
 --- It can be `null` if the client supports workspace folders but none are
 --- configured.
 --- @field workspace_folders lsp.WorkspaceFolder[]?
---- @field root_dir string
+--- @field root_dir string?
 ---
 --- @field attached_buffers table<integer,true>
 ---
@@ -470,7 +470,6 @@ function Client.create(config)
     _on_exit_cbs = ensure_list(config.on_exit),
     _on_attach_cbs = ensure_list(config.on_attach),
     _on_error_cb = config.on_error,
-    _root_dir = config.root_dir,
     _trace = get_trace(config.trace),
 
     --- Contains $/progress report messages.
@@ -612,7 +611,10 @@ function Client:initialize()
     self:_run_callbacks(self._on_init_cbs, lsp.client_errors.ON_INIT_CALLBACK_ERROR, self, result)
 
     for buf in pairs(reattach_bufs) do
-      self:_on_attach(buf)
+      -- The buffer may have been detached in the on_init callback.
+      if self.attached_buffers[buf] then
+        self:_on_attach(buf)
+      end
     end
 
     log.info(

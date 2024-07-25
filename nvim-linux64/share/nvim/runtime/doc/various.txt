@@ -209,7 +209,7 @@ gx			Opens the current filepath or URL (decided by
 			This implies that an insert command must be completed
 			(to start Insert mode, see |:startinsert|).  A ":"
 			command must be completed as well.  And you can't use
-			"Q" or "gQ" to start Ex mode.
+			"gQ" to start Ex mode.
 
 			The display is not updated while ":normal" is busy.
 
@@ -578,6 +578,10 @@ Acting on multiple lines behaves as follows:
 - Otherwise all affected lines are converted to comments; blank lines are
   transformed to empty comments (e.g. `/**/`). Comment markers are aligned to
   the least indented line.
+
+Matching 'commentstring' does not account for whitespace in comment markers.
+Removing comment markers is first attempted exactly, with fallback to using
+markers trimmed from whitespace.
 
 If the filetype of the buffer is associated with a language for which a
 |treesitter| parser is installed, then |vim.filetype.get_option()| is called

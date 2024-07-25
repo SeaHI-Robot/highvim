@@ -1,5 +1,5 @@
 local health = vim.health
-local iswin = vim.loop.os_uname().sysname == 'Windows_NT'
+local iswin = vim.uv.os_uname().sysname == 'Windows_NT'
 
 local M = {}
 
@@ -7,7 +7,7 @@ local function is(path, ty)
   if not path then
     return false
   end
-  local stat = vim.loop.fs_stat(path)
+  local stat = vim.uv.fs_stat(path)
   if not stat then
     return false
   end
@@ -77,12 +77,14 @@ local function download(url)
       return out
     end
   elseif vim.fn.executable('python') == 1 then
-    local script = "try:\n\
-          from urllib.request import urlopen\n\
-          except ImportError:\n\
-          from urllib2 import urlopen\n\
-          response = urlopen('" .. url .. "')\n\
-          print(response.read().decode('utf8'))\n"
+    local script = ([[
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
+response = urlopen('%s')
+print(response.read().decode('utf8'))
+]]):format(url)
     local out, rc = health.system({ 'python', '-c', script })
     if out == '' and rc ~= 0 then
       return 'python urllib.request error: ' .. rc
