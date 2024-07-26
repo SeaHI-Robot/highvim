@@ -5,4 +5,6 @@ git clone -b nvim https://gitee.com/seahipage/highvim.git ~/.config/nvim/
 
 echo "alias nv='~/.config/nvim/nvim-linux64/bin/nvim'" >> ~/.bash_aliases
 
+source ~/.bashrc
+
 nv
