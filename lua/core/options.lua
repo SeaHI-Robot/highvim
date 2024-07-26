@@ -13,6 +13,7 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.autoindent = true
 opt.expandtab = true
+opt.cindent = true
 
 -- 防止包裹
 opt.wrap = false

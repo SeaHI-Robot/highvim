@@ -16,6 +16,7 @@ vim.keymap.set("i", "<C-b>", "<left>", { noremap = true })
 vim.keymap.set("i", "<C-f>", "<right>", { noremap = true })
 vim.keymap.set("i", "<C-a>", "<home>", { noremap = true })
 vim.keymap.set("i", "<C-e>", "<end>", { noremap = true })
+vim.keymap.set("i", "<C-d>", "<delete>", { noremap = true })
 
 
 -- ----Cmd---- --
@@ -25,6 +26,7 @@ vim.keymap.set("c", "<C-b>", "<left>", { noremap = true })
 vim.keymap.set("c", "<C-f>", "<right>", { noremap = true })
 vim.keymap.set("c", "<C-a>", "<home>", { noremap = true })
 vim.keymap.set("c", "<C-e>", "<end>", { noremap = true })
+vim.keymap.set("c", "<C-d>", "<delete>", { noremap = true })
 
 
 -- ----Normal---- --
@@ -38,7 +40,7 @@ vim.keymap.set("n", "<C-l>", "o<ESC>", { noremap = true })
 vim.keymap.set("n", "<leader>q", ":nohl<CR>", { noremap = true })
 
 -- \对应$
-vim.keymap.set( {"n", "v"}, '\\', '$', { noremap = true })
+vim.keymap.set({ "n", "v" }, '\\', '$', { noremap = true })
 
 -- 查找替换
 vim.keymap.set("n", '<leader>s', ':%s/old/new/g', { noremap = true })
