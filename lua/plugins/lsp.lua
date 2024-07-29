@@ -28,6 +28,7 @@ return {
             pyright = {},
             clangd = {},
             bashls = {},
+            matlab_ls = {},
         }
 
         local on_attach = function(_, bufnr)
