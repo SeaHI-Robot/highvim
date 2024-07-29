@@ -104,19 +104,21 @@ function Run()
     vim.cmd('w')
     local filetype = vim.bo.filetype
     if filetype == 'python' then
-        vim.cmd("AsyncRun -mode=term -pos=floaterm python3 %")
+        vim.cmd("!python3 %")
     elseif filetype == 'markdown' then
         vim.cmd("MarkdownPreviewToggle")
     elseif filetype == 'c' then
-        vim.cmd("AsyncRun -mode=term -pos=floaterm gcc % -o %< && ./%<")
+        vim.cmd("!gcc % -o %< && ./%<")
     elseif filetype == 'cpp' then
-        vim.cmd("AsyncRun -mode=term -pos=floaterm g++ % -o %< && ./%<")
+        vim.cmd("!g++ % -o %< && ./%<")
     elseif filetype == 'javascript' then
-        vim.cmd("AsyncRun -mode=term -pos=floaterm node %")
+        vim.cmd("!node %")
     elseif filetype == 'html' then
         vim.cmd("!microsoft-edge % &")
     elseif filetype == 'lua' then
-        vim.cmd("AsyncRun -mode=term -pos=floaterm lua %")
+        vim.cmd("!lua %")
+    elseif filetype == 'matlab' then
+        vim.cmd("!octave %")
     end
 end
 
