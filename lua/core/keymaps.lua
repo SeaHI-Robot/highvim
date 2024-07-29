@@ -118,7 +118,7 @@ function Run()
     elseif filetype == 'lua' then
         vim.cmd("!lua %")
     elseif filetype == 'matlab' then
-        vim.cmd("!octave %")
+        vim.cmd("!octave-cli %")
     end
 end
 
