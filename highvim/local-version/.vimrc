@@ -108,8 +108,8 @@ cnoremap <c-f> <right>
 inoremap <c-a> <home>
 inoremap <c-e> <end>
 inoremap <c-d> <del>
-inoremap <c-b> <left>
-inoremap <c-f> <right>
+inoremap <c-h> <left>
+inoremap <c-l> <right>
 
 " 方便浏览代码
 nnoremap <c-j> jzz
