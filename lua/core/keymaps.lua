@@ -59,27 +59,27 @@ vim.keymap.set('n', '<S-Right>', ':vertical resize +2<CR>', { noremap = true, si
 vim.keymap.set('n', '<S-Up>', ':resize +2<CR>', { noremap = true })
 vim.keymap.set('n', '<S-Down>', ':resize -2<CR>', { noremap = true })
 
--- 分屏操作
+-- 分屏操作 <Deprecated>
 --用 <leader> + v 代替 ctrl+ w 再按 v 进行左右分屏
-vim.keymap.set('n', '<leader>v', '<C-W>v', { noremap = true })
+-- vim.keymap.set('n', '<leader>v', '<C-W>v', { noremap = true })
 --用 <leader> + w 代替 ctrl+ w 再按 w 进行分屏间切换
-vim.keymap.set('n', '<leader>w', '<C-W>w', { noremap = true, desc = "Switch Buffer" })
+-- vim.keymap.set('n', '<leader>w', '<C-W>w', { noremap = true, desc = "Switch Buffer" })
 --用 <leader> + h 代替 ctrl+ w 再按 h 进行向左边分屏切换
-vim.keymap.set('n', '<leader>h', '<C-W>h', { noremap = true, desc = "Switch to the Left Buffer" })
+-- vim.keymap.set('n', '<leader>h', '<C-W>h', { noremap = true, desc = "Switch to the Left Buffer" })
 --用 <leader> + l 代替 ctrl+ w 再按 l 进行向右边分屏切换
-vim.keymap.set('n', '<leader>l', '<C-W>l', { noremap = true, desc = "Switch to the Right Buffer" })
+-- vim.keymap.set('n', '<leader>l', '<C-W>l', { noremap = true, desc = "Switch to the Right Buffer" })
 --用 <leader> + H 代替 ctrl+ w 再按 H 进行向左边移动
-vim.keymap.set('n', '<leader>H', '<C-W>H', { noremap = true })
+-- vim.keymap.set('n', '<leader>H', '<C-W>H', { noremap = true })
 --用 <leader> + L 代替 ctrl+ w 再按 L 进行向右边移动
-vim.keymap.set('n', '<leader>L', '<C-W>L', { noremap = true })
+-- vim.keymap.set('n', '<leader>L', '<C-W>L', { noremap = true })
 --用 <leader> + j 代替 ctrl+ w 再按 j 进行向下边分屏切换
-vim.keymap.set('n', '<leader>j', '<C-W>j', { noremap = true })
+-- vim.keymap.set('n', '<leader>j', '<C-W>j', { noremap = true })
 --用 <leader> + k 代替 ctrl+ w 再按 k 进行向上边分屏切换
-vim.keymap.set('n', '<leader>k', '<C-W>k', { noremap = true })
+-- vim.keymap.set('n', '<leader>k', '<C-W>k', { noremap = true })
 --用 <leader> + J 代替 ctrl+ w 再按 J 进行向下边移动
-vim.keymap.set('n', '<leader>J', '<C-W>J', { noremap = true })
+-- vim.keymap.set('n', '<leader>J', '<C-W>J', { noremap = true })
 --用 <leader> + K 代替 ctrl+ w 再按 K 进行向上边移动
-vim.keymap.set('n', '<leader>K', '<C-W>K', { noremap = true })
+-- vim.keymap.set('n', '<leader>K', '<C-W>K', { noremap = true })
 
 -- 切换buffer
 vim.keymap.set('n', '<leader><Tab>', "<cmd>bNext<CR>", { noremap = true })
