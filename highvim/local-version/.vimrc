@@ -87,7 +87,7 @@ nnoremap <leader>bc :bdelete<CR>
 " visual模式下整行移动
 vnoremap J :m '>+1<CR>gv=gv 
 vnoremap K :m '<-2<CR>gv=gv 
-" insert模式下自动补全括号和引号(已使用coc-pairs解决)
+" insert模式下自动补全括号和引号(已使用coc-pairs解决) <Deprecated>
 " inoremap { {}<ESC>i
 " inoremap ( ()<ESC>i
 " inoremap [ []<ESC>i
@@ -187,27 +187,27 @@ call plug#end()
 
 
 
-" ========== 分屏配置 ==========
+" ========== 分屏配置 ========== <Deprecated>
 " 用 <leader> + v 代替 ctrl+ w 再按 v 进行左右分屏
-nnoremap <leader>v <C-W>v
+" nnoremap <leader>v <C-W>v
 " 用 <leader> + w 代替 ctrl+ w 再按 w 进行分屏间切换
-nnoremap <leader>w <C-W>w
+" nnoremap <leader>w <C-W>w
 " 用 <leader> + h 代替 ctrl+ w 再按 h 进行向左边分屏切换
-nnoremap <leader>h <C-W>h
+" nnoremap <leader>h <C-W>h
 " 用 <leader> + l 代替 ctrl+ w 再按 l 进行向右边分屏切换
-nnoremap <leader>l <C-W>l
+" nnoremap <leader>l <C-W>l
 " 用 <leader> + H 代替 ctrl+ w 再按 H 进行向左边移动
-nnoremap <leader>H <C-W>H
+" nnoremap <leader>H <C-W>H
 " 用 <leader> + L 代替 ctrl+ w 再按 L 进行向右边移动
-nnoremap <leader>L <C-W>L
+" nnoremap <leader>L <C-W>L
 " 用 <leader> + j 代替 ctrl+ w 再按 j 进行向下边分屏切换
-nnoremap <leader>j <C-W>j
+" nnoremap <leader>j <C-W>j
 " 用 <leader> + k 代替 ctrl+ w 再按 k 进行向上边分屏切换
-nnoremap <leader>k <C-W>k
+" nnoremap <leader>k <C-W>k
 " 用 <leader> + J 代替 ctrl+ w 再按 J 进行向下边移动
-nnoremap <leader>J <C-W>J
+" nnoremap <leader>J <C-W>J
 " 用 <leader> + K 代替 ctrl+ w 再按 K 进行向上边移动
-nnoremap <leader>K <C-W>K
+" nnoremap <leader>K <C-W>K
 
 
 " NERDTree config - Press <F2> to toggle
