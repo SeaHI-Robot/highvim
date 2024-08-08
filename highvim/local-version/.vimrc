@@ -26,9 +26,13 @@ set cindent
 set title
 " 行号
 set number
+set relativenumber
 " \ 代替 $
 nnoremap \ $
 vnoremap \ $
+" - 代替 ^
+nnoremap - ^
+vnoremap - ^
 " 允许鼠标操作
 " set mouse=a
 nnoremap <c-m> :set mouse+=a<cr>
@@ -77,7 +81,7 @@ nnoremap <leader>N :set invrelativenumber<CR>
 nnoremap <leader>s :%s///g
 " 切换Buffer
 nnoremap <leader><Tab> :bNext<CR>
-nnoremap <leader>bc :bdelete<CR>
+nnoremap <C-w> :bdelete<CR>
 " nnoremap <leader>1 :b1<CR>
 " nnoremap <leader>2 :b2<CR>
 " nnoremap <leader>3 :b3<CR>
@@ -100,7 +104,7 @@ nnoremap <C-l> o<Esc>
 " cmd emacs mode
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
-cnoremap <c-d> <del>
+" cnoremap <c-d> <del> <Conflict>
 cnoremap <c-b> <left>
 cnoremap <c-f> <right>
 
@@ -121,6 +125,8 @@ set foldmethod=syntax
 autocmd BufEnter * setlocal nofoldenable
 nnoremap <leader>0 za
 
+nnoremap zm zM
+nnoremap zM zR
 " ========== runtime配置 ==========
 nnoremap <leader>r :call Run()<CR>
 func! Run() 
@@ -189,25 +195,25 @@ call plug#end()
 
 " ========== 分屏配置 ========== <Deprecated>
 " 用 <leader> + v 代替 ctrl+ w 再按 v 进行左右分屏
-" nnoremap <leader>v <C-W>v
+nnoremap <leader>v <C-W>v
 " 用 <leader> + w 代替 ctrl+ w 再按 w 进行分屏间切换
-" nnoremap <leader>w <C-W>w
+nnoremap <leader>w <C-W>
 " 用 <leader> + h 代替 ctrl+ w 再按 h 进行向左边分屏切换
-" nnoremap <leader>h <C-W>h
+nnoremap <leader>h <C-W>h
 " 用 <leader> + l 代替 ctrl+ w 再按 l 进行向右边分屏切换
-" nnoremap <leader>l <C-W>l
+nnoremap <leader>l <C-W>l
 " 用 <leader> + H 代替 ctrl+ w 再按 H 进行向左边移动
-" nnoremap <leader>H <C-W>H
+nnoremap <leader>H <C-W>H
 " 用 <leader> + L 代替 ctrl+ w 再按 L 进行向右边移动
-" nnoremap <leader>L <C-W>L
+nnoremap <leader>L <C-W>L
 " 用 <leader> + j 代替 ctrl+ w 再按 j 进行向下边分屏切换
-" nnoremap <leader>j <C-W>j
+nnoremap <leader>j <C-W>j
 " 用 <leader> + k 代替 ctrl+ w 再按 k 进行向上边分屏切换
-" nnoremap <leader>k <C-W>k
+nnoremap <leader>k <C-W>k
 " 用 <leader> + J 代替 ctrl+ w 再按 J 进行向下边移动
-" nnoremap <leader>J <C-W>J
+nnoremap <leader>J <C-W>J
 " 用 <leader> + K 代替 ctrl+ w 再按 K 进行向上边移动
-" nnoremap <leader>K <C-W>K
+nnoremap <leader>K <C-W>K
 
 
 " NERDTree config - Press <F2> to toggle
@@ -279,7 +285,8 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 
 " tagbar config
-nnoremap <leader>t :TagbarToggle<CR> 
+nnoremap <leader>o :TagbarToggle<CR> 
+" o means outline
 
 
 " nerdcommenter config
