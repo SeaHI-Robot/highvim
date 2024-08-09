@@ -17,9 +17,11 @@ set encoding=utf-8
 set fileencoding=utf-8
 " 缩进
 set autoindent
-set softtabstop=4
-set tabstop=4
-set shiftwidth=4
+set cindent
+set smartindent
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set cindent
 " title
@@ -116,11 +118,19 @@ nnoremap <S-l> <cmd>bNext<CR>
 " nnoremap <leader>4 :b4<CR>
 " nnoremap <leader>5 :b5<CR>
 " nnoremap <leader>6 :b6<CR>
-"
+
 " visual模式下整行移动
 vnoremap <S-j> :m '>+1<CR>gv=gv 
 vnoremap <S-k> :m '<-2<CR>gv=gv 
 
+" 设置折叠 `zc` `zo` `zO` `za` `zR` `zM` ...... 
+set foldenable
+set foldmethod=syntax
+autocmd BufEnter * setlocal nofoldenable
+nnoremap <leader>0 za
+
+nnoremap zm zM
+nnoremap zM zR
 
 " insert模式下自动补全括号和引号(已使用coc-pairs解决) <Deprecated>
 " inoremap { {}<ESC>i
@@ -131,7 +141,7 @@ vnoremap <S-k> :m '<-2<CR>gv=gv
 " inoremap < <><ESC>i
 
 " normal模式下添加空行
-nnoremap <c-l> o<Esc>
+nnoremap <C-l> o<Esc>
 
 " cmd emacs mode
 cnoremap <c-a> <home>
@@ -148,17 +158,10 @@ inoremap <c-h> <left>
 inoremap <c-l> <right>
 
 " 方便浏览代码
-nnoremap <c-j> jzz
-nnoremap <c-k> kzz
+nnoremap <C-j> jzz
+nnoremap <C-k> kzz
 
-" 设置折叠 `zc` `zo` `zO` `za` `zR` `zM` ...... 
-set foldenable
-set foldmethod=syntax
-autocmd BufEnter * setlocal nofoldenable
-nnoremap <leader>0 za
 
-nnoremap zm zM
-nnoremap zM zR
 " ========== runtime配置 ==========
 nnoremap <leader>r :call Run()<CR>
 func! Run() 
