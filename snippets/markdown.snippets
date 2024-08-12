@@ -1,0 +1,187 @@
+#---------- 我自己的snippets ----------# 
+
+snippet h "#"
+	# ${0:h1}
+snippet h2 "##"
+	## ${0:h2}
+snippet h3 "###"
+	### ${0:h3}
+snippet h4 "####"
+	#### ${0:h4}
+snippet br "<br>"
+	<br>
+snippet <p 
+	<p align="center" style="font-size: ${2:24}px;">
+		${1:content}
+	</p>
+
+snippet --- "Front matter"
+	---
+	$0
+	---
+snippet eq_inline "Inline Equation"
+	$$0$
+snippet eq "Latex Equation"
+	$$
+	$0
+	$$
+snippet - "Item"
+	- ${0}
+
+snippet <
+	<${0}>
+		${1}	
+	</${0}>
+
+snippet toc "Table of Contents"
+    [TOC]
+
+snippet todo "Todo Check Box"
+    - [ ] ${0:content}
+	
+	
+snippet imgz
+	<img src="${1:url}" alt="${2:name}" style="zoom:${3:50}%;" /> 
+snippet img
+	![${1:alttext}](${2:/images/image.jpg})
+snippet youtube
+	{% youtube ${0:video_id} %}
+
+snippet tb
+	|  ${0:factors}      |    ${1:a}       |  ${2:b}   	|
+	| ------------- |-------------  | ------- |
+	|    ${3:f1}    |    Y          | N       |
+	|    ${4:f2}    |    Y          | N       |
+
+
+
+# ========== Latex ==========
+snippet {
+	{$0}
+# Time derivative
+snippet ddt "time derivative"
+	\\frac{d}{dt} {$1} {$0}
+# Limit
+snippet lim "limit"
+	\\lim_{{$1}} {{$2}} {$0}
+# Partial derivative
+snippet pdv "partial derivation"
+	\\frac{\\partial {$1}}{\\partial {$2}} {$0}
+# Second order partial derivative
+snippet ppdv "second partial derivation"
+	\\frac{\\partial^2 {$1}}{\\partial {$2} \\partial {$3}} {$0}
+# Ordinary derivative
+snippet dv "derivative"
+	\\frac{d {$1}}{d {$2}} {$0}
+# Summation
+snippet sum "summation"
+	\\sum_{$1} {$0}
+# Shorthand for time derivative
+snippet dot "dot"
+	\\dot{$1} {$0}
+# Shorthand for second order time derivative
+snippet ddot "ddot"
+	\\ddot{$1} {$0}
+# Vector
+snippet vec "vector"
+	\\vec{$1} {$0}
+# Bar
+snippet bar "bar"
+	\\bar{$1} {$0}
+# Cross product
+snippet times "cross product"
+	\\times $0
+# Dot product
+snippet cdot "dot product"
+	\\cdot $0
+# Integral
+snippet int "integral"
+	\\int_{$1}^{$2} {$3} \\: d{$4} {$0}
+# Right arrow
+snippet ra "rightarrow"
+	\\rightarrow $0
+# Long right arrow
+snippet lra "longrightarrow"
+	\\longrightarrow {$0}
+
+
+# ========= Pandoc-Eisvogel ==========
+snippet pandoc_frontmatter 
+	---
+	title: "${1:title}"
+	author: [${2:Siyuan Wang}]
+	date: "20${3:24}-${4:01}-${5:01}"
+	---
+
+    
+# ========== Marp ==========
+snippet marp_frontmatter 
+	---
+	marp: true
+	theme: default
+	paginate: true
+	math: katex
+	---
+
+
+# ========== Slidev ==========
+snippet sdv_twocols "Two Column Layout"
+	---
+	layout: two-cols
+	---
+
+	# Left
+
+	This shows on the left
+
+	::right::
+
+	# Right
+
+	This shows on the right
+snippet sdv_underline "UnderlineAnimation-Mark"
+	<span v-mark.underline.red="3">$0</span> 
+# "3"代表展示的次序
+snippet sdv_circle "CircleAnimation-Mark"
+	<span v-mark.circle.orange="4">$0</span>
+# "4"代表展示的次序
+snippet sdv_vclick "ClickAnimation"
+	<v-click>
+	${1:hello}
+	</v-click>    
+snippet sdv_items "Items"
+	<v-click>
+	- Item 1
+	  - Item 1.1 
+	  - Item 1.2 
+	- Item 2
+	  - Item 2.1 
+	  - Item 2.2 
+	</v-clicks>	
+snippet sdv_latex_array "Latex-one-by-one"
+	$$ {1|2|3|all}
+	\begin{array}{c}
+
+	 \\
+
+	 \\
+
+	\end{array}
+	$$
+# {1|2|3|all}代表先展示第一行公式，再第三行，然后全部行	
+snippet sdv_layout 
+	layout: ${0}
+snippet sdv_pos
+	position: ${0}
+snippet sdv_trans
+	transition: ${VISUAL:slide-left}
+snippet sdv_theme
+	theme: ${1:default}
+snippet sdv_footnote "仅在seriph和default使用" 
+	![^1]
+
+	<br>
+	[^1]: ${1:footnote}
+snippet sdv_page "PageNumberComment"
+	<!-- page: p${0:1} --> 
+		

@@ -1,0 +1,11 @@
+{
+    "coc.preferences.extensionUpdateCheck": "weekly",
+    "suggest.noselect": false,
+    "suggest.enablePreselect": false,
+    "suggest.timeout": 3000,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "json"
+    ],
+    "snippets.userSnippetsDirectory": "~/.vim/snippets",
+    "python.jediEnabled": false,
+}
