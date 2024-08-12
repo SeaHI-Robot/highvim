@@ -1,0 +1,9 @@
+return {
+	"kmontocam/nvim-conda",
+	dependencies = { "nvim-lua/plenary.nvim" },
+	event = "VeryLazy",
+	ft = { "python" },
+	keys = {
+		{ "<localleader>C", "<cmd>CondaActivate<CR>", desc = "[C]onda Activate", mode = { "n" } },
+	},
+}

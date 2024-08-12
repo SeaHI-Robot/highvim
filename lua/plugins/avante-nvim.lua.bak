@@ -1,0 +1,150 @@
+return {
+	{
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		lazy = true,
+		-- version = "false",  -- not set to "*" !
+		-- version = "false",  -- not set to "*" !
+        build = "make",
+		opts = {
+            provider = "kimi",
+            -- provider = "glm",
+            -- provider = "qwen", -- qwen issue: https://github.com/yetone/avante.nvim/issues/1219
+			auto_suggestions_provider = "copilot", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+            behaviour = {
+                enable_cursor_planning_mode = false, -- enable cursor planning mode!
+            },
+			-- openai = {
+			--     -- endpoint = "https://api.deepseek.com/v1",
+			--     -- model = "deepseek-chat",
+			--     -- endpoint = "https://api.lkeap.cloud.tencent.com/v1",
+			--     -- model = "deepseek-v3",
+			--     -- endpoint = "https://api.chatanywhere.tech/v1",
+			--     -- model = "gpt-4o-mini",
+			--     endpoint = "https://api.moonshot.cn/v1",
+			--     model = "moonshot-v1-32k",
+			--     timeout = 3000, -- Timeout in milliseconds
+			--     temperature = 0.1,
+			--     max_tokens = 4096,
+			--     -- ["local"] = false,
+			-- },
+			web_search_engine = {
+				provider = "google",
+			},
+			vendors = {
+				qwen = {
+					__inherited_from = "openai",
+					api_key_name = "QWEN_API",
+					endpoint = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+					model = "qwen-coder-plus-latest",
+					-- timeout = 3000, -- Timeout in milliseconds
+					-- temperature = 0.1,
+					-- max_tokens = 4096,
+				},
+				kimi = {
+					__inherited_from = "openai",
+					api_key_name = "KIMI_API",
+					endpoint = "https://api.moonshot.cn/v1",
+					model = "moonshot-v1-32k",
+					-- timeout = 3000, -- Timeout in milliseconds
+					temperature = 0.1,
+					max_tokens = 2048,
+				},
+				doubao = {
+					__inherited_from = "openai",
+					api_key_name = "DOUBAO_API",
+					endpoint = "https://ark.cn-beijing.volces.com/api/v3",
+					model = "ep-20250216214123-m9gnn",
+					timeout = 3000, -- Timeout in milliseconds
+					temperature = 0.1,
+					max_tokens = 2048,
+				},
+				chatanywhere = {
+					__inherited_from = "openai",
+					api_key_name = "CHATANYWHERE_API",
+					endpoint = "https://api.chatanywhere.tech/v1",
+					model = "gpt-4o-mini",
+					timeout = 3000, -- Timeout in milliseconds
+					temperature = 0.1,
+					max_tokens = 4096,
+				},
+				glm = {
+					__inherited_from = "openai",
+					api_key_name = "GLM_API",
+					endpoint = "https://open.bigmodel.cn/api/paas/v4/",
+					model = "glm-4-flash",
+					timeout = 3000, -- Timeout in milliseconds
+					-- temperature = 0.1,
+					max_tokens = 2048,
+				},
+			},
+			windows = {
+				position = "right", -- the position of the sidebar
+				wrap = true, -- similar to vim.o.wrap
+				width = 30, -- default % based on available width
+				sidebar_header = {
+					enabled = false, -- true, false to enable/disable the header
+					align = "center", -- left, center, right for title
+					rounded = true,
+				},
+			},
+            ask = {
+                floating = true,
+            }
+		},
+		keys = {
+			{
+				"<C-Space>",
+				function()
+					vim.cmd("AvanteAsk")
+					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", true)
+				end,
+				desc = "avante: toggle",
+				mode = { "n", "i" },
+			},
+			{
+				"<localleader>A",
+				function()
+					vim.cmd("AvanteClear")
+					vim.cmd("AvanteRefresh")
+					vim.notify("Avante History Cleared !", vim.log.levels.INFO, { title = "avante.nvim" })
+				end,
+				desc = "avante: clear history",
+				mode = { "n", "i" },
+			},
+		},
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		build = "make",
+		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			--- The below dependencies are optional,
+			"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+			"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+			"zbirenbaum/copilot.lua", -- for providers='copilot'
+            "HakonHarnes/img-clip.nvim", -- for image pasting
+			{
+				-- Make sure to set this up properly if you have lazy=true
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
+		},
+		-- config = function()
+		--     local llm_tools = require("avante.llm_tools")
+		--     for _, tool in pairs(llm_tools.tools) do
+		--         if tool.name == "search" then
+		--             tool.name = "local_search"
+		--         end
+		--     end
+		--     ---@diagnostic disable-next-line: inject-field
+		--     llm_tools.tools.local_search = llm_tools.search
+		-- end,
+	},
+}

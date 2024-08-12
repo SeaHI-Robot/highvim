@@ -1,0 +1,25 @@
+-- this config is used befor 2024-12-5, now this lazygit configuration is defined in snacks.nvim configuration
+
+return {
+    "kdheepak/lazygit.nvim",
+    event = "VeryLazy",
+    dependencies = {
+        "nvim-telescope/telescope.nvim",
+        "nvim-lua/plenary.nvim",
+    },
+    cmd = {
+        "LazyGit",
+        "LazyGitConfig",
+        "LazyGitCurrentFile",
+        "LazyGitFilter",
+        "LazyGitFilterCurrentFile",
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+        { "<localleader>lg", mode = "n", "<cmd>LazyGit<cr>", desc = "[Git]: Open LazyGit" }
+    },
+    config = function()
+        -- require("telescope").load_extension("lazygit")
+    end
+}

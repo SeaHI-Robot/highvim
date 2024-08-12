@@ -1,0 +1,14 @@
+return {
+    "MunsMan/kitty-navigator.nvim",
+    build = {
+        "cp navigate_kitty.py ~/.config/kitty",
+        "cp pass_keys.py ~/.config/kitty",
+    },
+    event = "VeryLazy",
+    keys = {
+        { "<C-h>", function() require("kitty-navigator").navigateLeft() end, desc = "Kitty: Go to Left Window", mode = { "n" } },
+        { "<C-j>", function() require("kitty-navigator").navigateDown() end, desc = "Kitty: Go to Down Window", mode = { "n" } },
+        { "<C-k>", function() require("kitty-navigator").navigateUp() end,  desc = "Kitty: Go to Up Window",    mode = { "n" } },
+        { "<C-l>", function() require("kitty-navigator").navigateRight() end, desc = "Kitty: Go to Right Window", mode = { "n" } },
+    },
+}

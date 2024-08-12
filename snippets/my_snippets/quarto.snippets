@@ -1,0 +1,442 @@
+#---------- 我自己的snippets ----------# 
+snippet incremental "incremental tag for revealjs"
+    ::: {.incremental}
+	$0
+    :::
+
+snippet aside "footnote tag for revealjs"
+    ::: aside
+	$0
+    :::
+
+snippet pause "pause slide for revealjs"
+
+	. . .
+
+
+snippet footnote "footnote tag for revealjs"
+	^[${0:footnote}]
+
+snippet nofooter "nofooter tag for revealjs"
+	{footer=false}
+
+snippet footer-custom "footer-custom tag for revealjs"
+	::: footer
+	$0
+	:::
+
+snippet column "column tag for revealjs"
+	::: {.column width="50%"}
+	$0
+	:::
+
+snippet scrollable "scrollable tag for revealjs"
+	::: {.scrollable}
+	$0
+	:::
+
+snippet smaller "smaller tag for revealjs"
+	{.smaller}
+
+snippet notes "speaker's notes tag for revealjs"
+	::: {.notes}
+	$0
+	:::
+
+snippet cite "citation tag for revealjs"
+    [@${0:cite}]
+
+snippet references "ref tag for revealjs"
+	::: {#references}
+	:::
+
+snippet tabsets "tabsets tag for revealjs"
+	::: {.panel-tabset}
+
+    ### Tab A
+
+	Content for `Tab A`
+
+    ### Tab B
+
+	Content for `Tab B`
+	:::
+
+snippet tabsets "mermaid for revealjs"
+    \`\`\`{mermaid}
+        ${0:mermaid_code}
+    \`\`\`
+
+snippet code_block "Code Block for revealjs"
+	\`\`\`{.python}
+    ${0:code}
+    \`\`\`
+
+snippet code_block_highlight "Code Block for revealjs"
+	\`\`\`{.python code-line-numbers="6-8"or"6,8"}
+    ${0:code}
+    \`\`\`
+
+snippet code_block_executable "Code Block for revealjs"
+	\`\`\`{python}
+	#| echo: true
+    ${0:code}
+    \`\`\`
+
+snippet br "<br>"
+	<br>
+
+snippet <p 
+	<p align="center" style="font-size: ${2:24}px;">
+		${1:content}
+	</p>
+
+snippet --- "Front matter"
+	---
+	$0
+	---
+
+snippet eq_inline "Inline Equation"
+	$$0$
+
+snippet eq "Latex Equation"
+	$$
+	$0
+	$$
+
+snippet item "Item"
+	- ${0}
+
+
+snippet tag_xml
+	<${0}>
+		${1}	
+	</${0}>
+
+snippet toc "Table of Contents"
+    [TOC]
+
+snippet todo "Todo Check Box"
+    - [ ] ${0:content}
+	
+snippet center_layout "center"
+    ::: {layout-align="center"}
+    ${0:content}
+    :::
+
+snippet centered_text "centered text"
+    ::: {.r-stack}
+    ${0:content}
+    :::
+
+snippet background_color "background-color"
+    {background-color="#7F7F7F"}
+
+snippet img
+    ![${1:caption}](${2:image_url}){fig-align="left" width="400px"}
+
+snippet figure
+    ![${1:caption}](${2:image_url}){fig-align="left" width="400px"}
+
+snippet img_with_label
+    ::: {#fig-${3:fig-label}}
+    ![${1:caption}](${2:image_url}){fig-align="left" width="400px"}
+    :::
+
+snippet figure_with_label
+    ::: {#${3:fig-label}}
+    ![${1:caption}](${2:image_url}){fig-align="left" width="400px"}
+    :::
+
+snippet subfigures
+    ::: {#fig-label layout-ncol=2}
+
+    ![caption](image_url){#subfig-fitst}
+
+    ![caption](image_url){#subfig-seconf}
+
+    Figure Caption
+    :::
+
+snippet table
+	| Default | Left | Right | Center |
+	|---------|:-----|------:|:------:|
+	| 12      | 12   |    12 |   12   |
+	| 123     | 123  |   123 |  123   |
+	| 1       | 1    |     1 |   1    |
+	: ${1:caption} {#tbl-${2:tbl-label}, tbl-colwidths="[75,25]"}
+
+snippet subtables
+	::: {#tbl-label layout-ncol=2}
+	| Col1 | Col2 | Col3 |
+	|------|------|------|
+	| A    | B    | C    |
+	| E    | F    | G    |
+	| A    | G    | G    |
+
+	: First Table {#tbl-first}
+
+	| Col1 | Col2 | Col3 |
+	|------|------|------|
+	| A    | B    | C    |
+	| E    | F    | G    |
+	| A    | G    | G    |
+
+	: Second Table {#tbl-second}
+
+	Main Caption
+	:::
+
+snippet table_by_code
+	\`\`\`{python}
+	#| label: tbl-${1:tbl-label}
+	#| tbl-cap: ${2:caption}
+
+	from IPython.display import Markdown
+	from tabulate import tabulate
+	table = [["Sun","696,000",1.989e30],
+			 ["Earth","6,371",5.972e24],
+			 ["Moon","1,737",7.34e22],
+			 ["Mars","3,390",6.39e23]]
+	Markdown(tabulate(
+	  table, 
+	  headers=["Astronomical object","R (km)", "mass (kg)"]
+	))
+	\`\`\`
+
+snippet video
+	<video src="${1:video_url}" width="600" controls style="display: block; margin-top: auto; margin-bottom: auto; margin-left: auto; margin-right: auto;"></video>
+
+snippet html
+	\`\`\`{=html}
+	<iframe width="880" height="500" src="${0:url}" ></iframe>
+	\`\`\`
+
+snippet alert "alert text"
+    [${0:alert_text}]{.alert}.
+
+snippet alert_custom_fg "alert text custom fg"
+    [${0:alert_text}]{.fg style="--col: #e64173"}.
+
+snippet alert_custom_bg "alert text custom bg"
+    [${0:alert_text}]{.bg style="--col: #e64173"}.
+
+snippet youtube
+	{% youtube ${0:video_id} %}
+
+snippet tb
+	|  ${0:factors}      |    ${1:a}       |  ${2:b}   	|
+	| ------------- | -------------  | ------- |
+	|    ${3:f1}    |    Y          | N       |
+	|    ${4:f2}    |    Y          | N       |
+
+
+
+# ========== Latex ==========
+# Time derivative
+snippet ddt "time derivative"
+	\\frac{d}{dt} {$1} {$0}
+
+# Limit
+snippet lim "limit"
+	\\lim_{{$1}} {{$2}} {$0}
+
+# Partial derivative
+snippet pdv "partial derivation"
+	\\frac{\\partial {$1}}{\\partial {$2}} {$0}
+
+# Second order partial derivative
+snippet ppdv "second partial derivation"
+	\\frac{\\partial^2 {$1}}{\\partial {$2} \\partial {$3}} {$0}
+
+# Ordinary derivative
+snippet dv "derivative"
+	\\frac{d {$1}}{d {$2}} {$0}
+
+# Summation
+snippet sum "summation"
+	\\sum_{$1} {$0}
+
+# Shorthand for time derivative
+snippet dot "dot"
+	\\dot{$1} {$0}
+
+# Shorthand for second order time derivative
+snippet ddot "ddot"
+	\\ddot{$1} {$0}
+
+# Vector
+snippet vec "vector"
+	\\vec{$1} {$0}
+
+snippet vec_arrow_above "vector_arrow"
+	\\overrightarrow{$1} {$0}
+
+# Bar
+snippet bar "bar"
+	\\bar{$1} {$0}
+
+# Cross product
+snippet times "cross product"
+	\\times $0
+
+# Dot product
+snippet cdot "dot product"
+	\\cdot $0
+
+# Integral
+snippet int "integral"
+	\\int_{$1}^{$2} {$3} \\: d{$4} {$0}
+
+# Right arrow
+snippet rightarrow "rightarrow"
+	\\rightarrow $0
+
+# Long right arrow
+snippet longrightarrow "longrightarrow"
+	\\longrightarrow {$0}
+
+# Letters
+snippet alpha "alpha"
+	\alpha
+
+snippet beta "beta"
+	\beta
+
+snippet gamma "gamma"
+	\gamma
+
+snippet delta "delta"
+	\delta
+
+snippet epsilon "epsilon"
+	\epsilon
+
+snippet varepsilon "varepsilon"
+	\varepsilon
+
+snippet zeta "zeta"
+	\zeta
+
+snippet eta "eta"
+	\eta
+
+snippet theta "theta"
+	\theta
+
+snippet vartheta "vartheta"
+	\vartheta
+
+snippet iota "iota"
+	\iota
+
+snippet kappa "kappa"
+	\kappa
+
+snippet lambda "lambda"
+	\lambda
+
+snippet mu "mu"
+	\mu
+
+snippet nu "nu"
+	\nu
+
+snippet xi "xi"
+	\xi
+
+snippet omicron "omicron"
+	\omicron
+
+snippet pi "pi"
+	\pi
+
+snippet rho "rho"
+	\rho
+
+snippet varrho "varrho"
+	\varrho
+
+snippet sigma "sigma"
+	\sigma
+
+snippet varsigma "varsigma"
+	\varsigma
+
+snippet tau "tau"
+	\tau
+
+snippet upsilon "upsilon"
+	\upsilon
+
+snippet phi "phi"
+	\phi
+
+snippet varphi "varphi"
+	\varphi
+
+snippet chi "chi"
+	\chi
+
+snippet psi "psi"
+	\psi
+
+snippet omega "omega"
+	\omega
+
+# Matrix
+snippet matrix "matrix (no brackets)"
+	\begin{matrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{matrix}
+
+snippet pmatrix "matrix with parentheses"
+	\begin{pmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{pmatrix}
+
+snippet bmatrix "matrix with square brackets"
+	\begin{bmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{bmatrix}
+
+snippet Bmatrix "matrix with curly braces"
+	\begin{Bmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{Bmatrix}
+
+snippet vmatrix "matrix with vertical bars"
+	\begin{vmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{vmatrix}
+
+snippet Vmatrix "matrix with double vertical bars"
+	\begin{Vmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{Vmatrix}
+
+# Text
+snippet text "\text{}"
+    \text{$0}
+
+# Times
+snippet times "times"
+    \times
+
+# Tilde 波浪线
+snippet tilde "tilde"
+	\tilde{$0}
+
+# Math font
+snippet mathbb "mathbb"
+    \mathbb{}
+
+snippet mathbf "mathbf"
+    \mathbf{}
+
