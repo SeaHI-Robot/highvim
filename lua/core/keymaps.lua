@@ -184,7 +184,7 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = 'markdown',
     callback = function()
         -- 在Markdown模式下设置keymap
-        vim.keymap.set('n', '<C-b>', '****<ESC>hi', { noremap = true })
+        -- vim.keymap.set('n', '<C-b>', '****<ESC>hi', { noremap = true })
     end,
 })
 

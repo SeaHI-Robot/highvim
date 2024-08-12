@@ -1,6 +1,10 @@
 return {
     "preservim/nerdcommenter",
     event = "VeryLazy",
+    keys = {
+        -- NERDCommenterToggle 以 ctrl+/ 触发
+        { "<C-_>", "<Plug>NERDCommenterToggle", desc = "Toggle NvimTree", mode = { "n", "v" } },
+    },
     config = function()
         -- 启用默认的映射创建
         vim.g.NERDCreateDefaultMappings = 1
@@ -18,7 +22,5 @@ return {
         vim.g.NERDTrimTrailingWhitespace = 1
         -- 启用NERDCommenterToggle以检查所有选定的行是否已注释或未注释
         vim.g.NERDToggleCheckAllLines = 1
-        -- NERDCommenterToggle 以 ctrl+/ 触发
-        vim.keymap.set({'n', 'v'}, '<C-_>', '<Plug>NERDCommenterToggle', { noremap = true, silent = true })
     end
 }

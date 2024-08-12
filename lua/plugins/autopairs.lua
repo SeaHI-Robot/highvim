@@ -58,7 +58,7 @@ return {
         end
         -- auto add space on =
         npairs.add_rules {
-            Rule('=', '', { 'c', 'cpp', 'python', 'lua', 'matlab', 'markdown', 'latex'})
+            Rule('=', '', { 'c', 'cpp', 'python', 'lua', 'matlab', 'markdown', 'tex'})
                 :with_pair(cond.not_inside_quote())
                 :with_pair(function(opts)
                     local last_char = opts.line:sub(opts.col - 1, opts.col - 1)

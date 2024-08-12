@@ -9,20 +9,22 @@ return {
         -- {
         --     "jinzhongjia/LspUI.nvim",
         --     branch = "main",
-        --     -- 和lspsage一样
+        --     -- 和 lspsage 中UI组件类似的功能 
         -- },
         {
             "j-hui/fidget.nvim",
             tag = "legacy",
         },
-        "SmiteshP/nvim-navbuddy",
-        dependencies = {
-            "SmiteshP/nvim-navic",
-            "MunifTanjim/nui.nvim"
-        },
-        opts = { lsp = { auto_attach = true } }
+        -- "SmiteshP/nvim-navbuddy",
+        -- dependencies = {
+        --     "SmiteshP/nvim-navic",
+        --     "MunifTanjim/nui.nvim"
+        -- },
+        -- opts = { lsp = { auto_attach = true } }
+        -- "navbuddy": 类似ranger、yazi的outline导航插件
     },
     event = { "BufReadPost", "BufNewFile" },
+    cmd = { "Mason" },
     config = function() -- mason需要加载的language server
         local servers = {
             lua_ls = {
@@ -50,7 +52,7 @@ return {
             -- ruff_ls = {},
         }
 
-        local navbuddy = require("nvim-navbuddy")
+        -- local navbuddy = require("nvim-navbuddy")
 
         local on_attach = function(_, bufnr)
             -- Enable completion triggered by <c-x><c-o>
@@ -60,7 +62,7 @@ return {
                 end
                 vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc, noremap = true })
             end
-            navbuddy.attach(_, bufnr)
+            -- navbuddy.attach(_, bufnr)
 
             nmap('gD', "<cmd>Lspsaga peek_definition<CR>", 'Peek [D]eclaration ')
             nmap('gd', require("telescope.builtin").lsp_definitions, '[G]oto [D]efinition')
@@ -77,7 +79,7 @@ return {
             --     '[W]orkspace [L]ist Folders')
             nmap('<leader>d', vim.lsp.buf.type_definition, 'Type [D]efinition')
             nmap('<leader>D', "<cmd>Lspsaga peek_type_definition<CR>", 'Type [D]efinition')
-            nmap('<leader>rn', "<cmd>Lspsaga rename<CR>", '[R]e[N]ame')
+            nmap('<leader>rn', "<cmd>Lspsaga rename ++project<CR>", '[R]e[N]ame')
             -- nmap('<leader>ca', "<cmd>Lspsaga code_action<CR>", '[C]ode [A]ction')
             nmap('<leader>da', require("telescope.builtin").diagnostics, '[D]i[A]gonostics')
             nmap("<leader>F",
@@ -100,7 +102,8 @@ return {
         })
 
         vim.keymap.set({ 'n', 't' }, '<leader>f<space>', '<cmd>Lspsaga term_toggle<CR>', { noremap = true })
-        -- vim.keymap.set('n', '<leader>t', '<cmd>Lspsaga outline<CR>', { noremap = true })
+        vim.keymap.set('n', '<leader>O', '<cmd>Lspsaga outline<CR>', { noremap = true })
+        --
         -- require("LspUI").setup()
 
         require("mason").setup({

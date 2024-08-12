@@ -1,6 +1,7 @@
 return {
     "norcalli/nvim-colorizer.lua",
     event = "VeryLazy",
+    ft = { "css", "json", "lua" },
     config = function()
         require("colorizer").setup {
             filetypes = { "*" },

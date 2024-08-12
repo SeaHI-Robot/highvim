@@ -1,5 +1,9 @@
 return {
     "goolord/alpha-nvim",
+    -- event = "VeryLazy",
+    -- keys = {
+    --     { "<leader>A", "<cmd>Alpha<CR>",   mode = { "n" }, desc = "Open Alpha-Nvim Dashboard" },
+    -- },
     config = function()
         local alpha = require("alpha")
         local dashboard = require("alpha.themes.dashboard")

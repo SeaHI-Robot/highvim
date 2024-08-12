@@ -10,6 +10,7 @@ return {
             ["<Up>"] = { "i" },
             ["<Down>"] = { "i" },
         },
+        enabled = false,
     },
     keys = {
         {
@@ -22,9 +23,9 @@ return {
             mode = { "n" }
         },
     },
-    config = function()
-        require("hardtime").setup(
-            {enabled = false}
-        )
-    end
+    -- config = function()
+    --     require("hardtime").setup(
+    --         {enabled = false}
+    --     )
+    -- end
 }

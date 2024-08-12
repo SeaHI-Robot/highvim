@@ -1,6 +1,10 @@
 return {
     "akinsho/bufferline.nvim",
     event = "BufEnter",
+    -- event = "VeryLazy",
+    opts = {
+        disabled_filetypes = { "alpha" },
+    },
     config = function()
         require("bufferline").setup({
             options = {

@@ -1,7 +1,8 @@
 return {
     "lervag/vimtex",
     -- lazy = false, -- we don't want to lazy load VimTeX
-    ft = { "markdown" },
+    -- ft = { "markdown", "tex" },
+    ft = { "tex" },
     -- tag = "v2.15", -- uncomment to pin to a specific release
     config = function()
         -- VimTeX configuration goes here, e.g.

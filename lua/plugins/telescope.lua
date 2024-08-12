@@ -24,6 +24,7 @@ return {
             desc = "Find Plugin File",
         }
     },
+    cmd = { "Telescopr" },
     opts = {
         defaults = {
             layout_strategy = "horizontal",
