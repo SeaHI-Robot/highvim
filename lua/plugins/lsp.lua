@@ -24,6 +24,7 @@ return {
         -- "navbuddy": 类似ranger、yazi的outline导航插件
     },
     event = { "BufReadPost", "BufNewFile" },
+    ft = { "lua", "python", "cmake", "cpp", "c", "mardown", "tex", "json", "yaml" },
     cmd = { "Mason" },
     config = function() -- mason需要加载的language server
         local servers = {

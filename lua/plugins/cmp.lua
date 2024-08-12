@@ -13,6 +13,7 @@ return {
         },
     },
     event = "VeryLazy",
+    ft = { "c", "cpp", "lua", "vim", "markdown", "tex", "yaml", "json", "toml" },
     config = function()
         -- 使用snipmate的snippet格式，并加载vim-snippets和我的snipmate的snippets的路径
         require("luasnip.loaders.from_snipmate").lazy_load({ paths = { "~/.vim/snippets", "~/.vim/plugged/vim-snippets/snippets/" } })
