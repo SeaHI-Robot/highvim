@@ -24,12 +24,13 @@ return {
             desc = "Find Plugin File",
         }
     },
-    cmd = { "Telescopr" },
+    cmd = { "Telescope" },
     opts = {
         defaults = {
             layout_strategy = "horizontal",
             layout_config = {
-                    prompt_position = "top",
+                prompt_position = "top",
+                -- preview_cutoff = 120,
             },
             sorting_strategy = "ascending",
             winblend = 0,

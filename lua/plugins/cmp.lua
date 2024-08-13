@@ -13,7 +13,19 @@ return {
         },
     },
     event = "VeryLazy",
-    ft = { "c", "cpp", "lua", "vim", "markdown", "tex", "yaml", "json", "toml" },
+    ft = {
+        "c",
+        "cpp",
+        "lua",
+        "vim",
+        "markdown",
+        "tex",
+        "yaml",
+        "json",
+        "toml",
+        "bash",
+        "javascript",
+        "cmake" },
     config = function()
         -- 使用snipmate的snippet格式，并加载vim-snippets和我的snipmate的snippets的路径
         require("luasnip.loaders.from_snipmate").lazy_load({ paths = { "~/.vim/snippets", "~/.vim/plugged/vim-snippets/snippets/" } })
@@ -119,6 +131,26 @@ return {
                 end, { "i", "s" }),
                 -- Shift + Tab 跳转到上一个补全项
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    elseif luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
+                -- Down 跳转到下一个补全项
+                ["<Down>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_next_item()
+                    elseif luasnip.locally_jumpable(1) then
+                        luasnip.jump(1)
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
+                -- Up 跳转到上一个补全项
+                ["<Up>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
                     elseif luasnip.locally_jumpable(-1) then

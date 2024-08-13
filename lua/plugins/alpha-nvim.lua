@@ -1,6 +1,6 @@
 return {
     "goolord/alpha-nvim",
-    -- event = "VeryLazy",
+    event = "VimEnter",
     -- keys = {
     --     { "<leader>A", "<cmd>Alpha<CR>",   mode = { "n" }, desc = "Open Alpha-Nvim Dashboard" },
     -- },
@@ -85,17 +85,21 @@ return {
                 pcall(vim.cmd.AlphaRedraw)
             end,
         })
-
         vim.api.nvim_create_autocmd("User", {
             pattern = "AlphaReady",
-            command = "set showtabline=0 | set laststatus=0",
+            desc = "Disable status and tabline for alpha",
+            callback = function()
+                vim.go.laststatus = 0
+                vim.opt.showtabline = 0
+            end,
         })
-        --
         vim.api.nvim_create_autocmd("BufUnload", {
             buffer = 0,
+            desc = "Enable status and tabline after alpha",
             callback = function()
+                vim.go.laststatus = 3
                 vim.opt.showtabline = 2
             end,
         })
-    end
+    end,
 }

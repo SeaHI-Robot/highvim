@@ -7,7 +7,18 @@ return {
     main = "nvim-treesitter.configs",
     build = ":TSUpdate",
     opts = {
-        ensure_installed = { "c", "lua", "vim", "cpp", "python", "markdown", "tex", "cmake"},
+        ensure_installed = {
+            "c",
+            "lua",
+            "vim",
+            "cpp",
+            "python",
+            "markdown",
+            "tex",
+            "cmake",
+            "bash",
+            "html",
+            "javascript" },
         ignore_install = { "tex" },
         disable = { "tex" },
         highlight = {
