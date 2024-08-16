@@ -1,9 +1,7 @@
+-- HighVim does not to choose to use alpha-nvim as first choice anymore, but dashboard.nvim instead (dashboard.nvim is faster? maybe?).
 return {
     "goolord/alpha-nvim",
     event = "VimEnter",
-    -- keys = {
-    --     { "<leader>A", "<cmd>Alpha<CR>",   mode = { "n" }, desc = "Open Alpha-Nvim Dashboard" },
-    -- },
     config = function()
         local alpha = require("alpha")
         local dashboard = require("alpha.themes.dashboard")
@@ -34,11 +32,12 @@ return {
 
         -- Set menu
         dashboard.section.buttons.val = {
-            dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-            -- dashboard.button("f", "󰈞  > Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
-            dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
-            dashboard.button("s", "  > Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
-            dashboard.button("q", "  > Quit", ":qa<CR>"),
+            dashboard.button("n", "   New file", ":ene <BAR> startinsert <CR>"),
+            dashboard.button("f", "󰈞  > Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
+            dashboard.button("r", "   Recent", ":Telescope oldfiles<CR>"),
+            dashboard.button("s", "   Settings", ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
+            dashboard.button("l", "󰒲   Lazy", ":Lazy<CR>"),
+            dashboard.button("q", "   Quit", ":qa<CR>"),
             {
                 type = "text",
                 val = "",

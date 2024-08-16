@@ -9,29 +9,34 @@ return {
             "saadparwaiz1/cmp_luasnip",
             dependencies = {
                 "L3MON4D3/LuaSnip",
+                version = "v2.3.0", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+                -- dependencies = {
+                --     "rafamadriz/friendly-snippets"
+                -- }
             }
         },
     },
     event = "VeryLazy",
-    ft = {
-        "c",
-        "cpp",
-        "lua",
-        "vim",
-        "markdown",
-        "tex",
-        "yaml",
-        "json",
-        "toml",
-        "bash",
-        "javascript",
-        "cmake" },
+    -- ft = {
+    --     "c",
+    --     "cpp",
+    --     "lua",
+    --     "vim",
+    --     "markdown",
+    --     "tex",
+    --     "yaml",
+    --     "json",
+    --     "toml",
+    --     "bash",
+    --     "javascript",
+    --     "cmake",
+    --     "snippets"},
     config = function()
         -- 使用snipmate的snippet格式，并加载vim-snippets和我的snipmate的snippets的路径
-        require("luasnip.loaders.from_snipmate").lazy_load({ paths = { "~/.vim/snippets", "~/.vim/plugged/vim-snippets/snippets/" } })
+        require("luasnip.loaders.from_snipmate").lazy_load({ paths = { "~/.config/nvim/snippets/my_snippets/", "~/.config/nvim/snippets/vim-snippets/" } })
 
-        -- load snippets from path/of/your/nvim/config/my-cool-snippets
-        -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.vscode/High-ROS-Snippets/snippets/" } })
+        -- load snippets from path/of/your/nvim/config/my-cool-snippets, 目标目录需要包含package.json
+        require("luasnip.loaders.from_vscode").load({ paths = { "~/.vscode/High-ROS-Snippets/" } })
 
         local luasnip = require("luasnip")
         local cmp = require("cmp")

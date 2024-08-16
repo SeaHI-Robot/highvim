@@ -6,7 +6,7 @@ vim.keymap.set({ "n", "v" }, "<A-;>", ";", { noremap = true }) -- <A-> won't wor
 
 -- ----Normal---- --
 -- 空格冒号
-vim.keymap.set({ "n", "v" }, " ", ":", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<space>", ":", { noremap = true })
 
 -- 添加空行
 vim.keymap.set("n", "<C-]>", "o<ESC>", { noremap = true })
@@ -54,11 +54,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", noremap = 
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", noremap = true  })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", noremap = true  })
 
--- 切换buffer
-vim.keymap.set('n', '<leader><Tab>', "<cmd>bNext<CR>", { noremap = true, desc = "Switch Buffer" })
-
 -- 关闭buffer
-vim.keymap.set('n', '<C-w>', "<cmd>bdelete<CR>", { noremap = true, desc = "Delete Buffer" })
+vim.keymap.set('n', '<leader>bc', "<cmd>bdelete<CR>", { noremap = true, desc = "Delete Buffer" })
 
 -- 方便浏览代码
 vim.keymap.set('n', '<A-]>', "jzz", { noremap = true })

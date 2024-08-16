@@ -107,7 +107,7 @@ return {
                     if prev_2char:match('%=$') then
                         return next_char
                     end
-                    if prev_2char:match('=') then
+                    if prev_2char:match('+') then
                         return '<bs><bs>+' .. next_char
                     end
                     return ''
@@ -117,12 +117,12 @@ return {
                 :with_del(cond.none())
         }
         -- 仅在cpp运行的规则，帮助cout操作
-        npairs.add_rule(
-            Rule('<<', ' << ', { 'c', 'cpp' })
-            :with_move(function(opts)
-                return opts.prev_char:match('.<<') ~= nil
-            end)
-            :with_cr(false)
-        )
+        -- npairs.add_rule(
+        --     Rule('<<', ' << ', { 'c', 'cpp' })
+        --     :with_move(function(opts)
+        --         return opts.prev_char:match('.<<') ~= nil
+        --     end)
+        --     :with_cr(false)
+        -- )
     end,
 }

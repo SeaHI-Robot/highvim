@@ -9,7 +9,7 @@ return {
         -- {
         --     "jinzhongjia/LspUI.nvim",
         --     branch = "main",
-        --     -- 和 lspsage 中UI组件类似的功能 
+        --     -- 和 lspsage 中UI组件类似的功能
         -- },
         {
             "j-hui/fidget.nvim",
@@ -26,6 +26,10 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     ft = { "lua", "python", "cmake", "cpp", "c", "mardown", "tex", "json", "yaml" },
     cmd = { "Mason" },
+    keys = {
+        { "<leader>f<space>", "<cmd>Lspsaga term_toggle<CR>", desc = "Toggle FLoat Termial <Lspsaga>", mode = { "n", "t" } },
+        { "<leader>O",        "<cmd>Lspsaga outline<CR>",     desc = "Toggle Outline <Lspsaga>",       mode = { "n" } },
+    },
     config = function() -- mason需要加载的language server
         local servers = {
             lua_ls = {
@@ -37,20 +41,22 @@ return {
             jedi_language_server = {
 
             },
-            pyright = {
-                python = {
-                    analysis = {
-                        typeCheckingMode = "off",
-                        autoSearchPaths = true,
-                        useLibraryDorTypes = true
-                    }
-                }
-            },
+            -- pyright = {
+            --     python = {
+            --         analysis = {
+            --             typeCheckingMode = "off",
+            --             autoSearchPaths = true,
+            --             useLibraryDorTypes = true
+            --         }
+            --     }
+            -- },
             clangd = {},
             bashls = {},
+            vimls = {},
             matlab_ls = {},
             cmake = {},
-            -- ruff_ls = {},
+            -- ruff_lsp = {},
+            jsonls = {}
         }
 
         -- local navbuddy = require("nvim-navbuddy")
@@ -80,7 +86,8 @@ return {
             --     '[W]orkspace [L]ist Folders')
             nmap('<leader>d', vim.lsp.buf.type_definition, 'Type [D]efinition')
             nmap('<leader>D', "<cmd>Lspsaga peek_type_definition<CR>", 'Type [D]efinition')
-            nmap('<leader>rn', "<cmd>Lspsaga rename ++project<CR>", '[R]e[N]ame')
+            nmap('<leader>rn', "<cmd>Lspsaga rename<CR>", '[R]e[N]ame')
+            -- nmap('<leader>rn', "<cmd>Lspsaga rename ++project<CR>", '[R]e[N]ame')
             -- nmap('<leader>ca', "<cmd>Lspsaga code_action<CR>", '[C]ode [A]ction')
             nmap('<leader>da', require("telescope.builtin").diagnostics, '[D]i[A]gonostics')
             nmap("<leader>F",
@@ -102,8 +109,6 @@ return {
             },
         })
 
-        vim.keymap.set({ 'n', 't' }, '<leader>f<space>', '<cmd>Lspsaga term_toggle<CR>', { noremap = true })
-        vim.keymap.set('n', '<leader>O', '<cmd>Lspsaga outline<CR>', { noremap = true })
         --
         -- require("LspUI").setup()
 
@@ -123,15 +128,27 @@ return {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         require("mason-lspconfig").setup({
             ensure_installed = vim.tbl_keys(servers),
-            handlers = {
-                function(server_name) -- default handler (optional)
-                    require("lspconfig")[server_name].setup {
-                        settings = servers[server_name],
+            -- handlers = {
+            --     function(server_name) -- default handler (optional)
+            --         require("lspconfig")[server_name].setup {
+            --             settings = servers[server_name],
+            --             on_attach = on_attach,
+            --             capabilities = capabilities
+            --         }
+            --     end,
+            -- }
+        })
+
+        for server, config in pairs(servers) do
+            require("lspconfig")[server].setup(
+                vim.tbl_deep_extend("keep",
+                    {
                         on_attach = on_attach,
                         capabilities = capabilities
-                    }
-                end,
-            }
-        })
+                    },
+                    config
+                )
+            )
+        end
     end
 }

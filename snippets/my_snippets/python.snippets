@@ -1,0 +1,34 @@
+#---------- 我自己的snippets ----------#                                            
+snippet #! "Select Interpreter"
+	#!/usr/bin/env python3
+snippet fori "For Loop"
+    for i in range(${1:10}):
+        ${0}
+snippet prred "Print Red"
+	print("\033[31m${0}\033[0m")
+snippet prgreen "Print Green"
+	print("\033[32m${0}\033[0m")
+snippet pryellow "Print Yellow"
+	print("\033[33m${0}\033[0m")
+snippet prblue "Print Blue"
+	print("\033[34m${0}\033[0m")
+snippet prmagenta "Print Magenta"
+	print("\033[35m${0}\033[0m")
+snippet prcyan "Print Cyan"
+	print("\033[36m${0}\033[0m")
+
+snippet decorator_timer "Timer Decorator"
+    def timer_decorator(func):
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            result = func(*args, **kwargs)
+            end_time = time.time()
+            print(f"{func.__name__} took {end_time - start_time:.4f} seconds to run.")
+            return result
+        return wrapper
+
+snippet decorator "Decorator"
+    def ${1:decorator_name}(func):
+        def ${2:wrapper}(*args, **kwargs):
+            ${3}
+        return ${0} 
