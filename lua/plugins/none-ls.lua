@@ -4,7 +4,11 @@ return {
         dependencies = {
             "zeioth/none-ls-autoload.nvim",
         },
+        ft = {
+            "python"
+        },
         event = { "BufReadPost", "BufNewFile" },
+        -- event = { "VeryLazy" },
         config = function()
             local tools = {
                 "black"

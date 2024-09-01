@@ -31,8 +31,8 @@ return {
           -- stylua: ignore
           center = {
             { action = "ene | startinsert",                                   desc = " New File",        icon = " ", key = "n" },
-            { action = 'lua require("telescope.builtin").oldfiles()',         desc = " Recent Files",    icon = " ", key = "r" },
-            -- { action = 'cd $HOME/Workspace | Telescope find_files<CR>',      desc = " Find File",       icon = "󰈞 ", key = "f" },
+            { action = 'NvimTreeOpen',                                        desc = " File Explorer",   icon = " ",  key = "e" },
+            { action = 'lua require("telescope.builtin").oldfiles()',         desc = " Recent Files",    icon = "󰈞 ", key = "r" },
             { action = 'lua require("persistence").load()',                   desc = " Restore Session", icon = " ", key = "s" },
             { action = ':e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd',  desc = " Config",          icon = " ", key = "c" },
             { action = "Lazy",                                                desc = " Lazy",            icon = "󰒲 ", key = "l" },

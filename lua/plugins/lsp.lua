@@ -38,6 +38,7 @@ return {
                     telemetry = { enable = false },
                 },
             },
+            -- ========== Python LSP ========== -- 
             jedi_language_server = {
 
             },
@@ -50,12 +51,13 @@ return {
             --         }
             --     }
             -- },
+            ruff_lsp = {},
+            -- ========== Python LSP ========== -- 
             clangd = {},
             bashls = {},
             vimls = {},
             matlab_ls = {},
             cmake = {},
-            -- ruff_lsp = {},
             jsonls = {}
         }
 
