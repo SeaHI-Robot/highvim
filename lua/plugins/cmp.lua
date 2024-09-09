@@ -37,6 +37,7 @@ return {
 
         -- load snippets from path/of/your/nvim/config/my-cool-snippets, 目标目录需要包含package.json
         require("luasnip.loaders.from_vscode").load({ paths = { "~/.vscode/High-ROS-Snippets/" } })
+        -- require("luasnip.loaders.from_vscode").load({ paths = { "~/.vscode/High-ROS2-Snippets/" } })
 
         local luasnip = require("luasnip")
         local cmp = require("cmp")
