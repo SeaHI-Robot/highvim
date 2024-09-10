@@ -58,10 +58,8 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", noremap = 
 vim.keymap.set('n', '<leader>bc', "<cmd>bdelete<CR>", { noremap = true, desc = "Delete Buffer" })
 
 -- 方便浏览代码
-vim.keymap.set('n', '<A-]>', "jzz", { noremap = true })
-vim.keymap.set('n', '<A-[>', "kzz", { noremap = true })
-vim.keymap.set('n', '<C-]>', "jzz", { noremap = true })
-vim.keymap.set('n', '<C-[>', "kzz", { noremap = true })
+vim.keymap.set('n', '<A-.>', "jzz", { noremap = true })
+vim.keymap.set('n', '<A-,>', "kzz", { noremap = true })
 
 -- better up/down
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
