@@ -92,8 +92,8 @@ return {
                         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
                     end,
                     '[W]orkspace [L]ist Folders')
-                nmap('<leader>d', vim.lsp.buf.type_definition, 'Type [D]efinition')
-                nmap('<leader>D', "<cmd>Lspsaga peek_type_definition<CR>", 'Type [D]efinition')
+                nmap('<leader>tD', vim.lsp.buf.type_definition, '[T]ype [D]efinition')
+                nmap('<leader>td', "<cmd>Lspsaga peek_type_definition<CR>", '[T]ype [D]efinition')
                 nmap('<leader>rn', "<cmd>Lspsaga rename<CR>", '[R]e[N]ame')
                 -- nmap('<leader>rn', "<cmd>Lspsaga rename ++project<CR>", '[R]e[N]ame')
                 nmap('<leader>ca', "<cmd>Lspsaga code_action<CR>", '[C]ode [A]ction')
