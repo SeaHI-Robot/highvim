@@ -9,7 +9,9 @@ snippet h3 "###"
 snippet h4 "####"
 	#### ${0:h4}
 snippet br "<br>"
+
 	<br>
+
 snippet <p 
 	<p align="center" style="font-size: ${2:24}px;">
 		${1:content}
@@ -25,10 +27,20 @@ snippet eq "Latex Equation"
 	$$
 	$0
 	$$
-snippet - "Item"
+snippet item "Item"
 	- ${0}
 
-snippet <
+snippet code_block "Code Block"
+	\`\`\`
+    ${0:code}
+    \`\`\`
+
+snippet code_block_language "Code Block that specifies language"
+	\`\`\`${1:language}
+    ${0:code}
+    \`\`\`
+
+snippet tag_xml
 	<${0}>
 		${1}	
 	</${0}>
@@ -49,15 +61,13 @@ snippet youtube
 
 snippet tb
 	|  ${0:factors}      |    ${1:a}       |  ${2:b}   	|
-	| ------------- |-------------  | ------- |
+	| ------------- | -------------  | ------- |
 	|    ${3:f1}    |    Y          | N       |
 	|    ${4:f2}    |    Y          | N       |
 
 
 
 # ========== Latex ==========
-snippet {
-	{$0}
 # Time derivative
 snippet ddt "time derivative"
 	\\frac{d}{dt} {$1} {$0}
@@ -85,6 +95,8 @@ snippet ddot "ddot"
 # Vector
 snippet vec "vector"
 	\\vec{$1} {$0}
+snippet vec_arrow_above "vector_arrow"
+	\\overrightarrow{$1} {$0}
 # Bar
 snippet bar "bar"
 	\\bar{$1} {$0}
@@ -98,10 +110,10 @@ snippet cdot "dot product"
 snippet int "integral"
 	\\int_{$1}^{$2} {$3} \\: d{$4} {$0}
 # Right arrow
-snippet ra "rightarrow"
+snippet rightarrow "rightarrow"
 	\\rightarrow $0
 # Long right arrow
-snippet lra "longrightarrow"
+snippet longrightarrow "longrightarrow"
 	\\longrightarrow {$0}
 
 
