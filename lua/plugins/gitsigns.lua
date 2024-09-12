@@ -15,26 +15,31 @@ return {
 
                 -- Navigation
                 map('n', '<leader>gn', function()
-                    if vim.wo.diff then
-                        vim.cmd.normal({ '<leader>gn', bang = true })
-                    else
-                        gitsigns.nav_hunk('next')
-                    end
-                end)
+                        if vim.wo.diff then
+                            vim.cmd.normal({ '<leader>gn', bang = true })
+                        else
+                            gitsigns.nav_hunk('next')
+                        end
+                    end,
+                    'Next Hunk'
+                )
 
                 map('n', '<leader>gN', function()
-                    if vim.wo.diff then
-                        vim.cmd.normal({ '<leader>gN', bang = true })
-                    else
-                        gitsigns.nav_hunk('prev')
-                    end
-                end)
+                        if vim.wo.diff then
+                            vim.cmd.normal({ '<leader>gN', bang = true })
+                        else
+                            gitsigns.nav_hunk('prev')
+                        end
+                    end,
+                    'Previous Hunk'
+                )
 
                 -- Actions
                 -- map('n', '<leader>gsh', gitsigns.stage_hunk, 'Stage Hunk')
                 map('n', '<leader>gr', gitsigns.reset_hunk, 'Reset Hunk')
                 -- map('v', '<leader>gsh', function() gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, 'Stage Hunk')
-                map('v', '<leader>gr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, 'Reset Hunk')
+                map('v', '<leader>gr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+                    'Reset Hunk')
                 -- map('n', '<leader>gsb', gitsigns.stage_buffer, 'Stage Buffer')
                 -- map('n', '<leader>gub', gitsigns.undo_stage_hunk, 'Undo Stage Hunk')
                 map('n', '<leader>gR', gitsigns.reset_buffer, 'Reset Buffer')
