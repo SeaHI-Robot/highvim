@@ -1,15 +1,5 @@
 #---------- 我自己的snippets ----------# 
-
-snippet h "#"
-	# ${0:h1}
-snippet h2 "##"
-	## ${0:h2}
-snippet h3 "###"
-	### ${0:h3}
-snippet h4 "####"
-	#### ${0:h4}
 snippet br "<br>"
-
 	<br>
 
 snippet <p 
@@ -115,7 +105,110 @@ snippet rightarrow "rightarrow"
 # Long right arrow
 snippet longrightarrow "longrightarrow"
 	\\longrightarrow {$0}
-
+# Letters
+snippet alpha "alpha"
+	\alpha
+snippet beta "beta"
+	\beta
+snippet gamma "gamma"
+	\gamma
+snippet delta "delta"
+	\delta
+snippet epsilon "epsilon"
+	\epsilon
+snippet varepsilon "varepsilon"
+	\varepsilon
+snippet zeta "zeta"
+	\zeta
+snippet eta "eta"
+	\eta
+snippet theta "theta"
+	\theta
+snippet vartheta "vartheta"
+	\vartheta
+snippet iota "iota"
+	\iota
+snippet kappa "kappa"
+	\kappa
+snippet lambda "lambda"
+	\lambda
+snippet mu "mu"
+	\mu
+snippet nu "nu"
+	\nu
+snippet xi "xi"
+	\xi
+snippet omicron "omicron"
+	\omicron
+snippet pi "pi"
+	\pi
+snippet rho "rho"
+	\rho
+snippet varrho "varrho"
+	\varrho
+snippet sigma "sigma"
+	\sigma
+snippet varsigma "varsigma"
+	\varsigma
+snippet tau "tau"
+	\tau
+snippet upsilon "upsilon"
+	\upsilon
+snippet phi "phi"
+	\phi
+snippet varphi "varphi"
+	\varphi
+snippet chi "chi"
+	\chi
+snippet psi "psi"
+	\psi
+snippet omega "omega"
+	\omega
+# Matrix
+snippet matrix "matrix (no brackets)"
+	\begin{matrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{matrix}
+snippet pmatrix "matrix with parentheses"
+	\begin{pmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{pmatrix}
+snippet bmatrix "matrix with square brackets"
+	\begin{bmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{bmatrix}
+snippet Bmatrix "matrix with curly braces"
+	\begin{Bmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{Bmatrix}
+snippet vmatrix "matrix with vertical bars"
+	\begin{vmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{vmatrix}
+snippet Vmatrix "matrix with double vertical bars"
+	\begin{Vmatrix}
+	a & b  \\\\
+	c & d  \\\\
+	\end{Vmatrix}
+# Text
+snippet text "\text{}"
+    \text{$0}
+# Times
+snippet times "times"
+    \times
+# Tilde 波浪线
+snippet tilde "tilde"
+	\tilde{$0}
+# Math font
+snippet mathbb "mathbb"
+    \mathbb{}
+snippet mathbf "mathbf"
+    \mathbf{}
 
 # ========= Pandoc-Eisvogel ==========
 snippet pandoc_frontmatter 
@@ -197,3 +290,26 @@ snippet sdv_footnote "仅在seriph和default使用"
 snippet sdv_page "PageNumberComment"
 	<!-- page: p${0:1} --> 
 		
+# ========= Just the Docs ==========
+snippet h "#"
+	# ${0:h1}
+snippet h2 "##"
+	## ${0:h2}
+    {: .fs-7 }
+snippet h3 "###"
+	### ${0:h3}
+    {: .fs-6 }
+snippet h4 "####"
+	#### ${0:h4}
+    {: .fs-4 }
+snippet foldable_toc "Foldable Table of Contents"
+    <details open markdown="block">
+      <summary>
+        Table of contents
+      </summary>
+      {: .text-delta }
+    1. TOC
+    {:toc}
+    <br>
+
+    </details>
