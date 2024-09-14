@@ -35,24 +35,26 @@ vim.keymap.set("n", "<leader>n", ":set invnumber<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>N", ":set invrelativenumber<CR>", { noremap = true })
 
 -- 改变窗口大小
-vim.keymap.set('n', '<S-Left>', '<cmd>vertical resize -2<CR>', { desc = "Increase Window Height", noremap = true, silent = true })
-vim.keymap.set('n', '<S-Right>', '<cmd>vertical resize +2<CR>', {desc = "Decrease Window Height" , noremap = true, silent = true })
-vim.keymap.set('n', '<S-Up>', '<cmd>resize +2<CR>', { desc = "Increase Window Width" , noremap = true })
+vim.keymap.set('n', '<S-Left>', '<cmd>vertical resize -2<CR>',
+    { desc = "Increase Window Height", noremap = true, silent = true })
+vim.keymap.set('n', '<S-Right>', '<cmd>vertical resize +2<CR>',
+    { desc = "Decrease Window Height", noremap = true, silent = true })
+vim.keymap.set('n', '<S-Up>', '<cmd>resize +2<CR>', { desc = "Increase Window Width", noremap = true })
 vim.keymap.set('n', '<S-Down>', '<cmd>resize -2<CR>', { desc = "Decrease Window Width", noremap = true })
 
--- Split window on the right 
+-- Split window on the right
 vim.keymap.set('n', '<leader>|', '<C-W>v', { noremap = true, desc = "Split Window Right" })
--- Split window on below 
+-- Split window on below
 vim.keymap.set('n', '<leader>-', '<C-W>s', { noremap = true, desc = "Split Window Below" })
 
 --用 <leader> + w 代替 ctrl+ w
 vim.keymap.set('n', '<leader>w', '<C-W>', { noremap = true, desc = "Switch Buffer" })
 
 -- Move to window using the <ctrl> hjkl keys
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", noremap = true  })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", noremap = true  })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", noremap = true  })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", noremap = true  })
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", noremap = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", noremap = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", noremap = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", noremap = true })
 
 -- 关闭buffer
 vim.keymap.set('n', '<leader>bc', "<cmd>bdelete<CR>", { noremap = true, desc = "Delete Buffer" })
@@ -74,6 +76,50 @@ vim.keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move Up", noremap = t
 -- commenting
 vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below", noremap = true })
 vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above", noremap = true })
+
+
+-- Better Subsititution
+function _G.replace_word_under_cursor()
+    -- 获取当前光标下的单词
+    local word = vim.fn.expand("<cword>")
+    -- 提示用户输入替换文本
+    local replacewith = vim.fn.input('Replace with: ')
+    -- 构造替换命令，并将光标放置在待输入新词的位置
+    vim.cmd(':s/' .. word .. '/' .. replacewith .. '/g')
+end
+
+function _G.replace_word_under_cursor_select()
+    -- 获取当前光标下的单词
+    local word = vim.fn.expand("<cword>")
+    -- 提示用户输入替换文本
+    local replacewith = vim.fn.input('Replace with: ')
+    -- 构造替换命令，并将光标放置在待输入新词的位置
+    vim.cmd(':s/' .. word .. '/' .. replacewith .. '/gc')
+end
+
+function _G.replace_word_under_cursor_global()
+    -- 获取当前光标下的单词
+    local word = vim.fn.expand("<cword>")
+    -- 提示用户输入替换文本
+    local replacewith = vim.fn.input('Replace with: ')
+    -- 构造替换命令，并将光标放置在待输入新词的位置
+    vim.cmd(':%s/' .. word .. '/' .. replacewith .. '/g')
+end
+
+function _G.replace_word_under_cursor_global_select()
+    -- 获取当前光标下的单词
+    local word = vim.fn.expand("<cword>")
+    -- 提示用户输入替换文本
+    local replacewith = vim.fn.input('Replace with: ')
+    -- 构造替换命令，并将光标放置在待输入新词的位置
+    vim.cmd(':%s/' .. word .. '/' .. replacewith .. '/gc')
+end
+
+-- 将该函数绑定到快捷键 <leader>s系列键 上
+vim.api.nvim_set_keymap('n', '<leader>s', ':lua replace_word_under_cursor()<CR>', { noremap = true } )
+vim.api.nvim_set_keymap('n', '<leader>sc', ':lua replace_word_under_cursor_select()<CR>', { noremap = true } )
+vim.api.nvim_set_keymap('n', '<leader>sg', ':lua replace_word_under_cursor_global()<CR>', { noremap = true } )
+vim.api.nvim_set_keymap('n', '<leader>sgc', ':lua replace_word_under_cursor_global_select()<CR>', { noremap = true } )
 
 
 
