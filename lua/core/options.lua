@@ -76,3 +76,9 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
         end
     end
 })
+
+-- 设置xml文件的缩进选项
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'xml',
+    command = 'setlocal shiftwidth=2 tabstop=2 expandtab'
+})
