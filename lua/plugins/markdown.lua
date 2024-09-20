@@ -17,12 +17,11 @@ return {
             if vim.fn.executable "npx" then vim.g.mkdp_filetypes = { "markdown" } end
         end,
     },
-
-    {
-        "img-paste-devs/img-paste.vim",
-        event = "VeryLazy",
-        ft = { "markdown" },
-    },
+    -- {
+    --     "img-paste-devs/img-paste.vim",
+    --     event = "VeryLazy",
+    --     ft = { "markdown" },
+    -- },
     {
         'MeanderingProgrammer/markdown.nvim',
         main = "render-markdown",

@@ -250,13 +250,13 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- image paste
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'markdown',
-    callback = function()
-        -- 在Markdown模式下设置keymap
-        vim.keymap.set({ 'n', 'i' }, '<C-v>', '<cmd>call mdip#MarkdownClipboardImage()<CR>', { noremap = true })
-    end,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--     pattern = 'markdown',
+--     callback = function()
+--         -- 在Markdown模式下设置keymap
+--         vim.keymap.set({ 'n', 'i' }, '<C-v>', '<cmd>call mdip#MarkdownClipboardImage()<CR>', { noremap = true })
+--     end,
+-- })
 
 -- md-img-paste插件的配置在neovim中有bug，放在这里可以正常使用
 local md_img_name = vim.fn.fnamemodify(vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), ':t:r')
