@@ -27,8 +27,14 @@ vim.keymap.set({ "n", "v" }, '-', '^', { noremap = true })
 -- 查找替换
 vim.keymap.set("n", '<leader>s', ':%s///g', { noremap = true })
 
--- 保存
-vim.keymap.set({ "n", "i", "x", "s" }, "<C-s>", "<cmd>w<CR><ESC>", { noremap = true, desc = "Save File" })
+-- 保存 & Format on Save
+vim.keymap.set({ "n", "i", "x", "s" },
+    "<C-s>",
+    function()
+        vim.lsp.buf.format { async = true }
+        vim.cmd("w")
+    end,
+    { noremap = true, desc = "Save File" })
 
 -- 切换显示行号
 vim.keymap.set("n", "<leader>n", ":set invnumber<CR>", { noremap = true })
@@ -116,10 +122,10 @@ function _G.replace_word_under_cursor_global_select()
 end
 
 -- 将该函数绑定到快捷键 <leader>s系列键 上
-vim.api.nvim_set_keymap('n', '<leader>s', ':lua replace_word_under_cursor()<CR>', { noremap = true } )
-vim.api.nvim_set_keymap('n', '<leader>sc', ':lua replace_word_under_cursor_select()<CR>', { noremap = true } )
-vim.api.nvim_set_keymap('n', '<leader>sg', ':lua replace_word_under_cursor_global()<CR>', { noremap = true } )
-vim.api.nvim_set_keymap('n', '<leader>sgc', ':lua replace_word_under_cursor_global_select()<CR>', { noremap = true } )
+vim.api.nvim_set_keymap('n', '<leader>s', ':lua replace_word_under_cursor()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>sc', ':lua replace_word_under_cursor_select()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>sg', ':lua replace_word_under_cursor_global()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>sgc', ':lua replace_word_under_cursor_global_select()<CR>', { noremap = true })
 
 
 
