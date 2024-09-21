@@ -1,0 +1,57 @@
+"""
+File: snipmate2vscode.py
+Description: 该脚本目前八太行
+"""
+
+import sys
+import re
+
+tab_width = 4
+
+def convert_snipmate_to_vscode(snipmate_file):
+    vscode_snippets = []
+    snippet_pattern = re.compile(r'^snippet\s+(\S+)(?:\s+"(.*)")?$', re.MULTILINE)
+    
+    with open(snipmate_file, 'r') as file:
+        content = file.read()
+        snippets = content.strip().split('\n\n')
+
+        for snippet in snippets:
+            lines = snippet.split('\n')
+            match = snippet_pattern.match(lines[0])
+            if not match:
+                continue
+            trigger, description = match.groups()
+            if not description:
+                description = trigger
+            body_lines = lines[1:]
+            body_lines = [line[tab_width:] if line.startswith('    ') else line for line in body_lines]
+            body_lines = [line.replace('${', '${').replace('}$', '}') for line in body_lines]
+            vscode_snippet = {
+                "prefix": trigger,
+                "body": body_lines,
+                "description": description
+            }
+            vscode_snippets.append(vscode_snippet)
+
+    return vscode_snippets
+
+def print_vscode_snippets(snippets):
+    for snippet in snippets:
+        print(f'    "{snippet["description"]}": {{')
+        print(f'        "prefix": "{snippet["prefix"]}",')
+        print('        "body": [')
+        for line in snippet["body"]:
+            print(f'            "{line}",')
+        print('        ],')
+        print(f'        "description": "{snippet["description"]}"')
+        print('    },')
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python convert_snippets.py <path_to_snipmate_snippets_file>")
+        sys.exit(1)
+
+    snipmate_file = sys.argv[1]
+    vscode_snippets = convert_snipmate_to_vscode(snipmate_file)
+    print_vscode_snippets(vscode_snippets)
