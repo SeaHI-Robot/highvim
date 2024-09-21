@@ -2,6 +2,7 @@
 File: snipmate2vscode.py
 Description: 该脚本目前八太行
 """
+
 import sys
 import re
 import json
@@ -23,8 +24,8 @@ def parse_snippets(content):
     current_snippet = []
 
     for line in content.splitlines():
-        # 忽略注释行
-        if line.strip().startswith('#'):
+        # 忽略空行和注释行
+        if not line.strip() or line.strip().startswith('#'):
             continue
 
         # 如果当前行匹配snippet模式，则开始一个新的代码片段
@@ -42,8 +43,9 @@ def parse_snippets(content):
 
     return snippets
 
-def convert_body(body_lines, tab_width=4):
-    return [line[tab_width:] if line.startswith(' ' * tab_width) else line for line in body_lines]
+def convert_body(body_lines):
+    # 去除每行开头的四个空格
+    return [line.lstrip(' ' * 4) for line in body_lines]
 
 def create_vscode_snippet(trigger, description, body):
     return {
@@ -53,7 +55,7 @@ def create_vscode_snippet(trigger, description, body):
     }
 
 def convert_snipmate_to_vscode(snippets):
-    vscode_snippets = []
+    vscode_snippets = {}
     snippet_pattern = re.compile(r'^snippet\s+(\S+)(?:\s+"(.*)")?$')
     
     for snippet in snippets:
@@ -62,13 +64,18 @@ def convert_snipmate_to_vscode(snippets):
         if match:
             trigger, description = match.groups()
             body_lines = convert_body(lines[1:])
+            # 去除最后的空行
+            if body_lines and not body_lines[-1].strip():
+                body_lines.pop()
             vscode_snippet = create_vscode_snippet(trigger, description, body_lines)
-            vscode_snippets.append(vscode_snippet)
+            # 使用描述作为键，如果描述为空则使用触发器
+            key = description or trigger
+            vscode_snippets[key] = vscode_snippet
     
     return vscode_snippets
 
 def print_vscode_snippets(snippets):
-    print(json.dumps({"snippets": snippets}, indent=4, ensure_ascii=False))
+    print(json.dumps(snippets, indent=4, ensure_ascii=False))
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
