@@ -1,6 +1,6 @@
 """
 File: snipmate2vscode.py
-Description: 该脚本目前八太行
+Description: 好用，除了latex相关的反斜杠的vscode snippet有问题，会多一个\t的制表符
 """
 
 import sys
