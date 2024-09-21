@@ -6,7 +6,17 @@ return {
             "williamboman/mason-lspconfig.nvim",
             "folke/neoconf.nvim",
             "folke/neodev.nvim",
-            "nvimdev/lspsaga.nvim",
+            {
+                "nvimdev/lspsaga.nvim",
+                opts = {
+                    hover = {
+                        max_width = 0.4,
+                        max_height = 0.6,
+                        open_link = 'gk',
+                        open_cmd = 'microsoft-edge'
+                    }
+                }
+            },
             -- {
             --     "jinzhongjia/LspUI.nvim",
             --     branch = "main",
@@ -44,19 +54,19 @@ return {
                     },
                 },
                 -- ========== Python LSP ========== --
-                jedi_language_server = {
-
-                },
-                -- pyright = {
-                --     python = {
-                --         analysis = {
-                --             typeCheckingMode = "off",
-                --             autoSearchPaths = true,
-                --             useLibraryDorTypes = true
-                --         }
-                --     }
+                -- jedi_language_server = {
+                --
                 -- },
-                ruff_lsp = {},
+                pyright = {
+                    python = {
+                        analysis = {
+                            typeCheckingMode = "off",
+                            autoSearchPaths = true,
+                            useLibraryDorTypes = true
+                        }
+                    }
+                },
+                -- ruff_lsp = {},
                 -- mypy = {},
                 -- ========== Python LSP ========== --
                 clangd = {},
@@ -156,7 +166,7 @@ return {
             ensure_installed = {
                 "black",
                 "debugpy",
-                "mypy",
+                -- "mypy",
                 "ruff_lsp",
                 "clangd",
                 "clang-format",
