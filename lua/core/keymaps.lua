@@ -33,9 +33,9 @@ vim.keymap.set({ "n", "i", "x", "s" },
     function()
         local filetype = vim.bo.filetype
         if filetype ~= 'markdown' then
-            vim.lsp.buf.format { async = true }
-            vim.cmd("w")
+            vim.lsp.buf.format { async = false }
         end
+        vim.cmd("w")
     end,
     { noremap = true, desc = "Save File" })
 
