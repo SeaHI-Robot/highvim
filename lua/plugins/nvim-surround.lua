@@ -19,5 +19,8 @@ return {
     --     'change quot*es'            cs'"            "change quotes"
     --     <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1>
     --     delete(functi*on calls)     dsf             function calls
-
+    --     local str = H*ello          ysiw"           local str = "Hello"
+    --     require"nvim-surroun*d"     ysa")           require("nvim-surround")
+    --     char c = *x;                ysl'            char c = 'x';
+    --     int a[] = *32;              yst;}           int a[] = {32};
 }
