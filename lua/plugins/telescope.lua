@@ -14,14 +14,14 @@ return {
     },
     keys = {
         { "<leader>fg",  "<cmd>Telescope live_grep<CR>",            mode = { "n" }, desc = "Live Grep" },
-        { "<leader>fG",  "<cmd>Telescope git_files<CR>",            mode = { "n" }, desc = "Find in Git Files" },
+        { "<leader>fF",  "<cmd>Telescope git_files<CR>",            mode = { "n" }, desc = "Find in Git Files" },
         { "<leader>ff",  "<cmd>Telescope find_files<CR>",           mode = { "n" }, desc = "Find Files" },
         { "<leader>fb",  "<cmd>Telescope buffers<CR>",              mode = { "n" }, desc = "Find Buffers" },
         { "<leader>fh",  "<cmd>Telescope help_tags<CR>",            mode = { "n" }, desc = "Help" },
         { "<leader>fo",  "<cmd>Telescope oldfiles<CR>",             mode = { "n" }, desc = "Recent Files" },
         { "<leader>fk",  "<cmd>Telescope keymaps<CR>",              mode = { "n" }, desc = "Keymaps" },
         { "<leader>fc",  "<cmd>Telescope colorscheme<CR>",          mode = { "n" }, desc = "Change Colorscheme" },
-        { "<leader>fGs", "<cmd>Telescope git_status<CR>",           mode = { "n" }, desc = "Git Status" },
+        { "<leader>fG", "<cmd>Telescope git_status<CR>",           mode = { "n" }, desc = "Git Status" },
         { "<leader>fds", "<cmd>Telescope lsp_document_symbols<CR>", mode = { "n" }, desc = "Search Document Symbols" },
         { "<leader>fws", "<cmd>Telescope git_status<CR>",           mode = { "n" }, desc = "Search Workspace Symbols" },
         {

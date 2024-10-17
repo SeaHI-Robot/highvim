@@ -7,14 +7,13 @@ return {
         "github/copilot.vim",
         event = "VeryLazy",
         opts = {},
-        -- stylua: ignore
-        -- keys = {
-        --     { "<leader>Sr", function() require("persistence").load() end,                desc = "Restore Session" },
-        --     { "<leader>Sl", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-        --     { "<leader>Sd", function() require("persistence").stop() end,                desc = "Don't Save Current Session" },
-        -- },
+        keys = {
+            { "<leader>Ge", "<cmd>Copilot enable<CR>",  desc = "[G]ithub Copilot [E]nable" },
+            { "<leader>Gs", "<cmd>Copilot status<CR>",  desc = "[G]ithub Copilot [S]tatus" },
+            { "<leader>Gd", "<cmd>Copilot disable<CR>", desc = "[G]ithub Copilot [D]isable" },
+            { "<leader>Gp", "<cmd>Copilot panel<CR>",   desc = "[G]ithub Copilot [P]anel" },
+        },
         config = function()
-            require("nvim-tree").setup {}
-        end,
+        end
     }
 }
