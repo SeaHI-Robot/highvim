@@ -30,12 +30,18 @@ vim.keymap.set("n", '<leader>s', ':%s///g', { noremap = true })
 
 -- 保存 & Format on Save
 vim.keymap.set({ "n", "i", "x", "s" },
-    "<C-s>",
+    "<A-s>",
     function()
         local filetype = vim.bo.filetype
         if filetype ~= 'markdown' then
             vim.lsp.buf.format { async = false }
         end
+        vim.cmd("w")
+    end,
+    { noremap = true, desc = "Format and Save File" })
+vim.keymap.set({ "n", "i", "x", "s" },
+    "<C-s>",
+    function()
         vim.cmd("w")
     end,
     { noremap = true, desc = "Save File" })
