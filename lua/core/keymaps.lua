@@ -4,7 +4,8 @@ vim.keymap.set({ "n", "v" }, "<A-;>", ";", { noremap = true }) -- <A-> won't wor
 
 
 
--- ----Normal---- --
+-- ---- Normal Mode ---- --
+
 -- 空格冒号
 vim.keymap.set({ "n", "v" }, "<space>", ":", { noremap = true })
 
@@ -52,7 +53,7 @@ vim.keymap.set('n', '<S-Up>', '<cmd>resize +2<CR>', { desc = "Increase Window Wi
 vim.keymap.set('n', '<S-Down>', '<cmd>resize -2<CR>', { desc = "Decrease Window Width", noremap = true })
 
 -- Split window on the right
-vim.keymap.set('n', '<leader>|', '<C-W>v', { noremap = true, desc = "Split Window Right" })
+vim.keymap.set('n', '<leader>\\', '<C-W>v', { noremap = true, desc = "Split Window Right" })
 -- Split window on below
 vim.keymap.set('n', '<leader>-', '<C-W>s', { noremap = true, desc = "Split Window Below" })
 
@@ -85,7 +86,6 @@ vim.keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move Up", noremap = t
 -- commenting
 vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below", noremap = true })
 vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above", noremap = true })
-
 
 -- Better Subsititution
 function _G.replace_word_under_cursor()
@@ -132,14 +132,14 @@ vim.api.nvim_set_keymap('n', '<leader>sgc', ':lua replace_word_under_cursor_glob
 
 
 
--- ----Visual---- --
+-- ---- Visual Mode ---- --
 -- Move lines
 vim.keymap.set('v', "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, desc = "Move the Selected Down" })
 vim.keymap.set('v', "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, desc = "Move the Selected Up" })
 
 
 
--- ----Insert---- --
+-- ---- Insert Mode ---- --
 vim.keymap.set("i", "jf", "<ESC>", { noremap = true })
 -- vim.keymap.set("i", "{", "{}<ESC>i", { noremap = true })
 -- vim.keymap.set("i", "(", "()<ESC>i", { noremap = true })
@@ -170,7 +170,7 @@ vim.keymap.set("i", ";", ";<c-g>u")
 
 
 
--- ----Cmd---- --
+-- ---- Cmd Mode---- --
 vim.keymap.set("c", "<C-j>", "<down>", { noremap = true })
 vim.keymap.set("c", "<C-k>", "<up>", { noremap = true })
 vim.keymap.set("c", "<C-b>", "<left>", { noremap = true })
@@ -180,16 +180,22 @@ vim.keymap.set("c", "<C-e>", "<end>", { noremap = true })
 -- vim.keymap.set("c", "<C-d>", "<delete>", { noremap = true }) <Conflict with Gnome Terminal keybinds>
 
 
--- ----Terminal---- --
-vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode", noremap = true })
+
+-- ---- Terminal Mode ---- --
+vim.keymap.set("t", "<esc>", "<c-\\><c-n>", { desc = "Quit Terminal Mode and Enter Normal Mode", noremap = true })
 -- vim.keymap.set("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to Left Window", noremap = true })
 -- vim.keymap.set("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to Lower Window", noremap = true })
 -- vim.keymap.set("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to Upper Window", noremap = true })
 -- vim.keymap.set("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window", noremap = true })
 -- vim.keymap.set("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal", noremap = true })
 -- vim.keymap.set("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore", noremap = true })
+vim.keymap.set('t', '<C-w>', "<C-\\><C-n><C-w>",
+    { desc = "Quick Window Operation Keymap in Terminal Mode", noremap = true })
+-- minimize terminal split
+vim.keymap.set('n', '<C-g>', "3<C-w>_")
 
--- ----others---- --
+
+-- ---- Others ---- --
 -- better indenting
 vim.keymap.set("v", "<", "<gv", { noremap = true })
 vim.keymap.set("v", ">", ">gv", { noremap = true })
