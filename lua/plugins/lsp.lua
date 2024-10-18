@@ -66,7 +66,7 @@ return {
                         }
                     }
                 },
-                ruff_lsp = {},
+                -- ruff_lsp = {},
                 -- mypy = {},
                 -- ========== Python LSP ========== --
                 clangd = {},
