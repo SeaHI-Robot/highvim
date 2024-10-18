@@ -188,6 +188,7 @@ vim.keymap.set("c", "<C-e>", "<end>", { noremap = true })
 
 
 -- ---- Terminal Mode ---- --
+vim.keymap.set("t", "jf", "<c-\\><c-n>", { desc = "Quit Terminal Mode and Enter Normal Mode", noremap = true })
 vim.keymap.set("t", "<esc>", "<c-\\><c-n>", { desc = "Quit Terminal Mode and Enter Normal Mode", noremap = true })
 -- vim.keymap.set("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to Left Window", noremap = true })
 -- vim.keymap.set("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to Lower Window", noremap = true })
@@ -214,22 +215,40 @@ function Run()
     -- 保存文件
     vim.cmd('w')
     local filetype = vim.bo.filetype
+
+    local file_name = vim.api.nvim_buf_get_name(0)
+    local cmd
+    local need_term_exec = true
+
+
+    
     if filetype == 'python' then
-        vim.cmd("!python3 %")
-    elseif filetype == 'markdown' then
-        vim.cmd("MarkdownPreviewToggle")
-    elseif filetype == 'c' then
-        vim.cmd("!gcc % -o %< && ./%<")
-    elseif filetype == 'cpp' then
-        vim.cmd("!g++ % -o %< && ./%<")
-    elseif filetype == 'javascript' then
-        vim.cmd("!node %")
-    elseif filetype == 'html' then
-        vim.cmd("!microsoft-edge % &")
+        cmd = "python3 \"" .. file_name
     elseif filetype == 'lua' then
-        vim.cmd("!lua %")
+        cmd = "lua \"" .. file_name
+    elseif filetype == 'markdown' then
+        vim.cmd('MarkdownPreviewToggle')
+        need_term_exec = false
+    elseif filetype == 'javascript' then
+        cmd = "node \"" .. file_name
+    elseif filetype == 'html' then
+        cmd = "microsoft-edge \"" .. file_name
+    elseif filetype == 'c' then
+        cmd = "gcc \"" .. file_name .. "\" -o \"" .. file_name:gsub(".c", "") .. " && \"" .. file_name:gsub(".c", "") .. "\""
+    elseif filetype == 'cpp' then
+        cmd = "g++ \"" .. file_name .. "\" -o \"" .. file_name:gsub(".cpp", "") .. " && \"" .. file_name:gsub(".cpp", "") .. "\""
     elseif filetype == 'matlab' then
-        vim.cmd("!octave-cli %")
+        cmd = "octave \"" .. file_name
+    end
+
+    if need_term_exec then
+        local term_cmd = vim.api.nvim_replace_termcodes(cmd .. "\"<cr>", true, false, true)
+
+        local lnrvim_togterm_cmd = vim.api.nvim_replace_termcodes("<leader><space>", true, false, true)
+
+        vim.api.nvim_feedkeys(lnrvim_togterm_cmd, "m", true)
+
+        vim.api.nvim_feedkeys(term_cmd, "t", false)
     end
 end
 

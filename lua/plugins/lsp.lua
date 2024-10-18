@@ -122,7 +122,7 @@ return {
             require("fidget").setup()
 
             require("lspsaga").setup({
-                lightbulb = {
+                ui = {
                     enable = false,
                 },
             })
