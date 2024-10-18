@@ -4,14 +4,15 @@ return {
     cmd = { "LLMSesionToggle", "LLMSelectedTextHandler" },
     config = function()
       require("llm").setup({
-        max_tokens = 4095,
+        -- ChatGLM
+        max_tokens = 4096,
         url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
         model = "glm-4-flash",
         prefix = {
-          user = { text = "  ", hl = "Title" },
-          assistant = { text = "⚡ ", hl = "Added" },
+          user = { text = "😃  ", hl = "Title" },
+          assistant = { text = "   ", hl = "Added" },
+          -- assistant = { text = "⚡ ", hl = "Added" },
         },
-
         save_session = true,
         max_history = 15,
 
