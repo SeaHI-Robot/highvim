@@ -33,7 +33,7 @@ return {
           ["Output:Resend"]     = { mode = "n", key = "<C-r>" },
 
           -- The keyboard mapping for the output and input windows in "float" style.
-          ["Session:Toggle"]    = { mode = "n", key = "<leader>L" },
+          ["Session:Toggle"]    = { mode = "n", key = "<leader>l" },
           ["Session:Close"]     = { mode = "n", key = "<esc>" },
         },
       })
@@ -43,10 +43,11 @@ return {
       { "<leader>ll", mode = "n", "<cmd>LLMSessionToggle<cr>", desc = "Toggle LLMSession" },
       { "<leader>le", mode = "v", "<cmd>LLMSelectedTextHandler 请解释下面这段代码<cr>", desc = "LLM: Explain Selected Code" },
       { "<leader>lt", mode = "x", "<cmd>LLMSelectedTextHandler 英译汉<cr>", desc = "LLM: Translate into Chinese" },
+      { "<leader>lo", mode = "x", "<cmd>LLMSelectedTextHandler 优化代码<cr>", desc = "LLM: Optimize Code" },
       { "<leader>lT", mode = "n", "<cmd>LLMAppHandler Translate<cr>", desc = "LLM: Translate" },
       -- { "<leader>c", mode = "x", "<cmd>LLMAppHandler TestCode<cr>" },
-      { "<leader>lc", mode = "x", "<cmd>LLMAppHandler OptimCompare<cr>" },
-      -- { "<leader>ao", mode = "x", "<cmd>LLMAppHandler OptimizeCode<cr>" },
+      -- { "<leader>lc", mode = "x", "<cmd>LLMAppHandler OptimCompare<cr>" },
+      -- { "<leader>lo", mode = "x", "<cmd>LLMAppHandler OptimizeCode<cr>" },
       -- { "au", mode = "n", "<cmd>LLMAppHandler UserInfo<cr>" },
     },
   }
