@@ -18,7 +18,7 @@ return {
         { "<leader>ff",  "<cmd>Telescope find_files<CR>",           mode = { "n" }, desc = "Find Files" },
         { "<leader>fb",  "<cmd>Telescope buffers<CR>",              mode = { "n" }, desc = "Find Buffers" },
         { "<leader>fh",  "<cmd>Telescope help_tags<CR>",            mode = { "n" }, desc = "Help" },
-        { "<leader>fo",  "<cmd>Telescope oldfiles<CR>",             mode = { "n" }, desc = "Recent Files" },
+        { "<leader>fr",  "<cmd>Telescope oldfiles<CR>",             mode = { "n" }, desc = "Recent Files" },
         { "<leader>fk",  "<cmd>Telescope keymaps<CR>",              mode = { "n" }, desc = "Keymaps" },
         { "<leader>fc",  "<cmd>Telescope colorscheme<CR>",          mode = { "n" }, desc = "Change Colorscheme" },
         { "<leader>fG", "<cmd>Telescope git_status<CR>",           mode = { "n" }, desc = "Git Status" },
