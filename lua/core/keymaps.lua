@@ -131,12 +131,13 @@ function _G.replace_word_under_cursor_global_select()
 end
 
 -- 将该函数绑定到快捷键 <leader>s系列键 上
-vim.api.nvim_set_keymap('n', '<leader>s', ':lua replace_word_under_cursor()<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>sc', ':lua replace_word_under_cursor_select()<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>sg', ':lua replace_word_under_cursor_global()<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>sgc', ':lua replace_word_under_cursor_global_select()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>s', ':lua replace_word_under_cursor()<CR>', { noremap = true , desc = "[S]ubsititute: Replace this Word" })
+vim.api.nvim_set_keymap('n', '<leader>sc', ':lua replace_word_under_cursor_select()<CR>', { noremap = true , desc = "[S]ubsititute: Replace the [C]ursor Selected"  })
+vim.api.nvim_set_keymap('n', '<leader>sg', ':lua replace_word_under_cursor_global()<CR>', { noremap = true , desc = "[S]ubsititute: Replace this Word [G]lobally"  })
+vim.api.nvim_set_keymap('n', '<leader>sgc', ':lua replace_word_under_cursor_global_select()<CR>', { noremap = true , desc = "[S]ubsititute: Replace the [C]ursor Selected [G]lobally"  })
 
-
+-- 按照缩进折叠代码
+vim.api.nvim_set_keymap('n', '<leader>fi', ':set foldmethod=indent<CR>', { noremap = true, desc = "Foldmethod as indent"})
 
 -- ---- Visual Mode ---- --
 -- Move lines
