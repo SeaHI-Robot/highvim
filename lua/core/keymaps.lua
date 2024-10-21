@@ -139,6 +139,13 @@ vim.api.nvim_set_keymap('n', '<leader>sgc', ':lua replace_word_under_cursor_glob
 -- 按照缩进折叠代码
 vim.api.nvim_set_keymap('n', '<leader>fi', ':set foldmethod=indent<CR>', { noremap = true, desc = "Foldmethod as indent"})
 
+
+
+-- 打印当前buffer文件路径
+vim.api.nvim_set_keymap('n', '<leader>pwd', '::echo expand(\'%:p\')<CR>', { noremap = true, desc = "[PWD] Print Working Directory of current buffer"})
+
+
+
 -- ---- Visual Mode ---- --
 -- Move lines
 vim.keymap.set('v', "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, desc = "Move the Selected Down" })
