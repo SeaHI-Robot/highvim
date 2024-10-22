@@ -18,4 +18,4 @@ require("lazy").setup({
 
 })
 
-vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<CR>", { noremap = true , desc = "Toggle Lazy.Nvim Panel"})
