@@ -166,13 +166,115 @@ return {
             max_tokens = 4096,
             url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
             model = "glm-4-flash",
+
+            -- UI Settings
+            save_session = true,
+            max_history = 15,
             prefix = {
                 user = { text = "😃  ", hl = "Title" },
                 assistant = { text = "   ", hl = "Added" },
                 -- assistant = { text = "⚡ ", hl = "Added" },
             },
-            save_session = true,
-            max_history = 15,
+            input_box_opts = {
+                relative = "editor",
+                position = {
+                    row = "85%",
+                    col = 15,
+                },
+                size = {
+                    height = "5%",
+                    width = 120,
+                },
+
+                enter = true,
+                focusable = true,
+                zindex = 50,
+                border = {
+                    style = "rounded",
+                    text = {
+                        top = " Enter Your Question ",
+                        top_align = "center",
+                    },
+                },
+                win_options = {
+                    -- set window transparency
+                    winblend = 10,
+                    -- set window highlight
+                    winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+                },
+            },
+            output_box_opts = {
+                style = "float", -- right | left | above | below | float
+                relative = "editor",
+                position = {
+                    row = "35%",
+                    col = 15,
+                },
+                size = {
+                    height = "65%",
+                    width = 90,
+                },
+                enter = true,
+                focusable = true,
+                zindex = 20,
+                border = {
+                    style = "rounded",
+                    text = {
+                        top = " Preview ",
+                        top_align = "center",
+                    },
+                },
+                win_options = {
+                    winblend = 10,
+                    winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+                },
+            },
+
+            history_box_opts = {
+                relative = "editor",
+                position = {
+                    row = "35%",
+                    col = 108,
+                },
+                size = {
+                    height = "65%",
+                    width = 27,
+                },
+                zindex = 70,
+                enter = false,
+                focusable = false,
+                border = {
+                    style = "rounded",
+                    text = {
+                        top = " History ",
+                        top_align = "center",
+                    },
+                },
+                win_options = {
+                    winblend = 10,
+                    winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+                },
+            },
+
+            -- LLMSelectedTextHandler windows options
+            popwin_opts = {
+                relative = "cursor",
+                position = {
+                    row = -7,
+                    col = 20,
+                },
+                size = {
+                    width = "50%",
+                    height = 35,
+                },
+                enter = true,
+                border = {
+                    style = "rounded",
+                    text = {
+                        top = " Explain ",
+                    },
+                },
+            },
 
             -- stylua: ignore
             keys = {
