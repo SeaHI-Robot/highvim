@@ -1,4 +1,6 @@
-# HighVim
+# HighVim 
+
+### (This Vim Setup will not be maintained anymore)
 
 > A Higly Configurable (Neo)Vim Setup(developed on linux)
 >
