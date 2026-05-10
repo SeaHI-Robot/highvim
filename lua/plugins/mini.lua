@@ -4,7 +4,6 @@
 return {
 	{
 		"echasnovski/mini.files",
-		event = "VeryLazy",
 		version = "*",
 		opts = {
 			windows = {
@@ -153,7 +152,6 @@ return {
 
 		"echasnovski/mini.ai",
 		version = "*",
-		event = "VeryLazy",
 		keys = {
 			{ "a", mode = { "x", "o" } },
 			{ "i", mode = { "x", "o" } },

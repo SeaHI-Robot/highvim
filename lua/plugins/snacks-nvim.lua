@@ -127,7 +127,7 @@ So Far    😊    So Good
 			},
 		},
 		animate = { enabled = false },
-		scope = { enbaled = true, underline = true, only_current = true },
+		scope = { enabled = true, underline = true, only_current = true },
 		scroll = {
 			enabled = false,
 			animate = {

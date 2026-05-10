@@ -29,4 +29,15 @@ require("lazy").setup({
 	},
 	-- Automatically check for plugin udpates
 	checker = { enabled = false },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 })

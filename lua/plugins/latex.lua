@@ -2,7 +2,6 @@ return {
 	{
 		"lervag/vimtex",
 		-- lazy = false, -- we don't want to lazy load VimTeX
-		event = "VeryLazy",
 		ft = { "tex" },
 		-- tag = "v2.15", -- uncomment to pin to a specific release
 		keys = {
@@ -40,7 +39,6 @@ return {
 	},
 	{
 		"let-def/texpresso.vim",
-		event = "VeryLazy",
 		ft = { "tex" },
 		keys = {
 			{ "<localleader>tx", mode = "n", "<cmd>TeXpresso %<cr>", desc = "[T]e[X]presso: render current Tex file" },

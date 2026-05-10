@@ -254,13 +254,12 @@ return {
 			{
 				"L3MON4D3/LuaSnip",
 				version = "v2.3.0", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-				event = "VeryLazy",
 			},
 		},
 		-- use a release tag to download pre-built binaries
 		version = "*",
 		event = "VeryLazy",
-		enabled = function()
+		config = function(_, opts)
 			-- 使用snipmate的snippet格式，并加载vim-snippets和我的snipmate的snippets的路径
 			require("luasnip.loaders.from_snipmate").lazy_load({
 				paths = {
@@ -269,9 +268,13 @@ return {
 					"~/.vscode/High-ROS2-Snippets/",
 				},
 			})
-			return vim.bo.buftype ~= "prompt" and vim.b.completion ~= false
+
+			require("blink.cmp").setup(opts)
 		end,
 		opts = {
+			enabled = function()
+				return vim.bo.buftype ~= "prompt" and vim.b.completion ~= false
+			end,
 			keymap = {
 				preset = "enter",
 				-- Toggle select

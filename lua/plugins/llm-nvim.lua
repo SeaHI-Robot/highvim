@@ -4,7 +4,6 @@ return {
 		"syw-robotics/llm.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
 		cmd = { "LLMSessionToggle", "LLMSelectedTextHandler", "LLMAppHandler" },
-		event = "VeryLazy",
 		config = function()
 			local tools = require("llm.tools")
 			local ui = require("llm.common.ui")

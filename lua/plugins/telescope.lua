@@ -1,11 +1,9 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	event = "VeryLazy",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{
 			"matkrin/telescope-spell-errors.nvim",
-			event = "VeryLazy",
 			config = function()
 				require("telescope").load_extension("spell_errors")
 			end,

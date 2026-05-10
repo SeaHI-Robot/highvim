@@ -4,7 +4,6 @@ local which_translator = "Trans.nvim"
 return {
 	{
 		"voldikss/vim-translator",
-		event = "VeryLazy",
 		keys = {
 			{ "<C-t>", "<cmd>TranslateW<CR>", desc = "Translate English to Chinese", mode = { "n" } },
 			{ "<C-t>", ":Translate<CR>", desc = "Translate English to Chinese", mode = { "v" }, silent = true },
@@ -23,7 +22,6 @@ return {
 	},
 	{
 		"syw-robotics/Trans.nvim",
-		event = "VeryLazy",
 		build = function()
 			require("Trans").install()
 		end,

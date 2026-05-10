@@ -2,7 +2,6 @@ return {
 	{
 		"petertriho/nvim-scrollbar",
 		cmd = "ScrollbarToggle",
-		event = "VeryLazy",
 		opts = {
 			handelers = {
 				gitsigns = true, -- Requires gitsigns

@@ -2,8 +2,6 @@ return {
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		ft = { "markdown", "quarto" },
-		event = "VeryLazy",
 		build = "cd app && yarn install",
 		-- build = function(plugin)
 		--     if vim.fn.executable "npx" then
@@ -21,7 +19,6 @@ return {
 	},
 	{
 		"Kicamon/markdown-table-mode.nvim",
-		event = "VeryLazy",
 		ft = { "markdown", "quarto" },
 		cmd = "Mtm",
 		opts = {
@@ -56,7 +53,6 @@ return {
 			-- },
 		}, -- if you prefer nvim-web-devicons
 		ft = { "markdown", "Avante", "llm" },
-		event = "VeryLazy",
 		opts = {
 			latex = {
 				enabled = true,

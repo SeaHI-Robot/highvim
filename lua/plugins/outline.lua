@@ -1,6 +1,6 @@
 return {
 	"hedyhli/outline.nvim",
-	event = "VeryLazy",
+	cmd = "Outline",
 	keys = {
 		{
 			"<localleader>o",

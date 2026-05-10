@@ -42,7 +42,7 @@ return {
 			{
 				-- "navbuddy": 类似ranger、yazi的outline导航插件
 				"SmiteshP/nvim-navbuddy",
-				event = "VeryLazy",
+				cmd = "Navbuddy",
 				dependencies = { "SmiteshP/nvim-navic", "MunifTanjim/nui.nvim" },
 				config = function()
 					local navbuddy = require("nvim-navbuddy")
@@ -83,8 +83,7 @@ return {
 				end,
 			},
 		},
-		event = "VeryLazy",
-		ft = { "lua", "python", "cmake", "cpp", "c", "mardown", "tex", "json", "yaml" },
+		ft = { "lua", "python", "cmake", "cpp", "c", "markdown", "tex", "json", "yaml" },
 		cmd = { "Mason" },
 		keys = {
 			-- { "<localleader>f<space>", "<cmd>Lspsaga term_toggle<CR>", desc = "Toggle FLoat Termial", mode = { "n" } },
@@ -172,11 +171,19 @@ return {
 				end
 				-- nmap("gD", "<cmd>Lspsaga peek_definition<CR>", "Peek [D]eclaration ")
 				nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-				nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-				nmap("gi", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-				nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+				nmap("gd", function()
+					require("telescope.builtin").lsp_definitions()
+				end, "[G]oto [D]efinition")
+				nmap("gi", function()
+					require("telescope.builtin").lsp_implementations()
+				end, "[G]oto [I]mplementation")
+				nmap("gr", function()
+					require("telescope.builtin").lsp_references()
+				end, "[G]oto [R]eferences")
 				-- nmap("gt", "<cmd>Lspsaga peek_type_definition<CR>", "[T]ype [D]efinition")
-				nmap("gt", require("telescope.builtin").lsp_type_definitions, "[T]ype [D]efinition")
+				nmap("gt", function()
+					require("telescope.builtin").lsp_type_definitions()
+				end, "[T]ype [D]efinition")
 				-- nmap('K', "<cmd>Lspsaga hover_doc<CR>", 'Hover Documentation')
 				nmap("K", function()
 					vim.lsp.buf.hover()
@@ -187,17 +194,19 @@ return {
 				nmap("<localleader>wl", function()
 					print("WorkSpace " .. vim.inspect(vim.lsp.buf.list_workspace_folders()))
 				end, "[W]orkspace [L]ist Folders")
-				nmap(
-					"<localleader>ws",
-					require("telescope.builtin").lsp_dynamic_workspace_symbols,
-					"[W]orkspace [S]ymbols"
-				)
-				nmap("<localleader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+				nmap("<localleader>ws", function()
+					require("telescope.builtin").lsp_dynamic_workspace_symbols()
+				end, "[W]orkspace [S]ymbols")
+				nmap("<localleader>ds", function()
+					require("telescope.builtin").lsp_document_symbols()
+				end, "[D]ocument [S]ymbols")
 				-- nmap("<localleader>rn", "<cmd>Lspsaga rename<CR>", "[R]e[N]ame in Project Scope")
 				nmap("<localleader>rn", vim.lsp.buf.rename, "[R]e[N]ame in Project Scope")
 				-- nmap("<localleader>ca", "<cmd>Lspsaga code_action<CR>", "[C]ode [A]ction")
 				nmap("<localleader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction") -- code action is not quite useful, often gives wrong suggestions
-				nmap("<localleader>da", require("telescope.builtin").diagnostics, "[D]i[A]gonostics")
+				nmap("<localleader>da", function()
+					require("telescope.builtin").diagnostics()
+				end, "[D]i[A]gonostics")
 				nmap("<localleader>fF", function()
 					local filetype = vim.bo.filetype
 					if filetype == "python" then
@@ -266,7 +275,7 @@ return {
 	},
 	{
 		"mason-org/mason.nvim",
-		event = "VeryLazy",
+		cmd = "Mason",
 		-- event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			ensure_installed = { -- "black", "debugpy", -- "mypy",

@@ -2,7 +2,7 @@ return {
 	-- amongst your other plugins
 	"akinsho/toggleterm.nvim",
 	version = "*",
-	event = "VeryLazy",
+	cmd = "ToggleTerm",
 	opts = {
 		size = function(term)
 			if term.direction == "horizontal" then

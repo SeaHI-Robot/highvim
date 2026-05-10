@@ -2,7 +2,6 @@ return {
 	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = "kevinhwang91/promise-async",
-		event = "VeryLazy",
 		-- event = "BufEnter",
 		ft = { "python", "cpp", "c", "markdown", "tex", "lua" },
 		keys = { -- If these are added, pressing tab conflicts

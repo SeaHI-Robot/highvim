@@ -1,13 +1,12 @@
 return {
 	"preservim/nerdcommenter",
-	event = "VeryLazy",
 	keys = {
 		{ "<C-_>", "<Plug>NERDCommenterToggle", desc = "Toggle Comment", mode = { "n", "v" } }, -- NERDCommenterToggle 以 ctrl+/ 触发
 		{ "gca", "<Plug>NERDCommenterAppend", desc = "Comment at End of Line", mode = { "n", "v" } },
 		-- "gco" 在下面一行开启注释
 		-- "gcO" 在下面一行开启注释
 	},
-	config = function()
+	init = function()
 		-- 启用默认的映射创建
 		vim.g.NERDCreateDefaultMappings = 1
 		-- 默认在注释分隔符后添加空格

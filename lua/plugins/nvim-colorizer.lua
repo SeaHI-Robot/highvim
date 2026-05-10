@@ -1,6 +1,6 @@
 return {
 	"norcalli/nvim-colorizer.lua",
-	event = "VeryLazy",
+	cmd = "ColorizerToggle",
 	ft = { "css", "json", "lua" },
 	keys = {
 		{ "<localleader>uc", "<cmd>ColorizerToggle<CR>", desc = "Toggle Colorizer", mode = { "n" } },

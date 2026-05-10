@@ -5,7 +5,6 @@ return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		cmd = "Neotree",
-		event = "VeryLazy",
 		keys = {
 			{
 				"<C-e>",
@@ -375,7 +374,7 @@ return {
 	{
 		"nvim-tree/nvim-tree.lua",
 		version = "*",
-		event = "VeryLazy",
+		cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeClose", "NvimTreeFocus" },
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},

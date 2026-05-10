@@ -5,7 +5,7 @@ return {
 		"jmbuhr/otter.nvim",
 		"nvim-treesitter/nvim-treesitter",
 	},
-	event = "VeryLazy",
+	cmd = { "QuartoPreview", "QuartoPreviewNoWatch", "QuartoUpdatePreview", "QuartoClosePreview", "QuartoActivate" },
 	ft = { "quarto" },
 	opts = {
 		debug = false,
