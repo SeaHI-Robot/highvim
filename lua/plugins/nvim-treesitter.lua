@@ -6,26 +6,37 @@ return {
 			event = "VeryLazy",
 			enabled = true,
 			config = function()
-				-- When in diff mode, we want to use the default
-				-- vim text objects c & C instead of the treesitter ones.
-				local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
-				local configs = require("nvim-treesitter.configs")
-				for name, fn in pairs(move) do
-					if name:find("goto") == 1 then
-						move[name] = function(q, ...)
-							if vim.wo.diff then
-								local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
-								for key, query in pairs(config or {}) do
-									if q == query and key:find("[%]%[][cC]") then
-										vim.cmd("normal! " .. key)
-										return
-									end
-								end
-							end
-							return fn(q, ...)
+				require("nvim-treesitter-textobjects").setup({
+					move = {
+						set_jumps = true,
+					},
+				})
+
+				local move = require("nvim-treesitter-textobjects.move")
+				local modes = { "n", "x", "o" }
+				local function map_move(lhs, method, query)
+					vim.keymap.set(modes, lhs, function()
+						-- In diff mode, keep Vim's built-in change hunk motions on [c/]c/[C/]C.
+						if vim.wo.diff and lhs:find("[%]%[][cC]") then
+							vim.cmd("normal! " .. lhs)
+							return
 						end
-					end
+						move[method](query, "textobjects")
+					end, { desc = "Treesitter textobject move " .. lhs })
 				end
+
+				map_move("]f", "goto_next_start", "@function.outer")
+				map_move("]c", "goto_next_start", "@class.outer")
+				map_move("]a", "goto_next_start", "@parameter.inner")
+				map_move("]F", "goto_next_end", "@function.outer")
+				map_move("]C", "goto_next_end", "@class.outer")
+				map_move("]A", "goto_next_end", "@parameter.inner")
+				map_move("[f", "goto_previous_start", "@function.outer")
+				map_move("[c", "goto_previous_start", "@class.outer")
+				map_move("[a", "goto_previous_start", "@parameter.inner")
+				map_move("[F", "goto_previous_end", "@function.outer")
+				map_move("[C", "goto_previous_end", "@class.outer")
+				map_move("[A", "goto_previous_end", "@parameter.inner")
 			end,
 		},
 		{
@@ -66,11 +77,56 @@ return {
 			},
 		},
 	},
-	event = "VeryLazy",
-	main = "nvim-treesitter.configs",
-	build = ":TSUpdate",
+	lazy = false,
+	build = function()
+		if vim.fn.executable("tree-sitter") == 1 then
+			vim.cmd("TSUpdate")
+		end
+	end,
 	config = function(_, opts)
-		require("nvim-treesitter.configs").setup(opts)
+		local treesitter = require("nvim-treesitter")
+		treesitter.setup(opts)
+
+		local ensure_installed = {
+			"c",
+			"lua",
+			"vim",
+			"cpp",
+			"python",
+			"markdown",
+			"markdown_inline",
+			"cmake",
+			"bash",
+			"html",
+			"javascript",
+		}
+		vim.schedule(function()
+			if vim.fn.executable("tree-sitter") == 1 then
+				treesitter.install(ensure_installed)
+			end
+		end)
+
+		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),
+			pattern = {
+				"bash",
+				"c",
+				"cmake",
+				"cpp",
+				"html",
+				"javascript",
+				"lua",
+				"markdown",
+				"python",
+				"sh",
+				"vim",
+			},
+			callback = function()
+				if pcall(vim.treesitter.start) then
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end
+			end,
+		})
 
 		vim.treesitter.query.add_directive("set-lang-from-info-string!", function(match, _, bufnr, pred, metadata)
 			local node = match[pred[2]]
@@ -99,51 +155,6 @@ return {
 		end, { force = true })
 	end,
 	opts = {
-		ensure_installed = {
-			"c",
-			"lua",
-			"vim",
-			"cpp",
-			"python",
-			"markdown",
-			"markdown_inline",
-			"latex",
-			"cmake",
-			"bash",
-			"html",
-			"javascript",
-		},
-		ignore_install = { "latex" },
-		disable = { "latex" },
-		highlight = {
-			enable = true,
-			disable = { "latex" },
-			additional_vim_regex_highlighting = { "latex" },
-		},
-		indent = {
-			enable = true,
-		},
-		incremental_selection = {
-			enable = true,
-			keymaps = {
-				init_selection = "<C-n>",
-				node_incremental = "<C-n>",
-				node_decremental = "<C-m>",
-				scope_incremental = false,
-			},
-		},
-		textobjects = {
-			move = {
-				enable = true,
-				goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
-				goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-				goto_previous_start = {
-					["[f"] = "@function.outer",
-					["[c"] = "@class.outer",
-					["[a"] = "@parameter.inner",
-				},
-				goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
-			},
-		},
+		install_dir = vim.fn.stdpath("data") .. "/site",
 	},
 }

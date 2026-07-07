@@ -27,10 +27,12 @@ return {
 			vim.g.vimtex_view_method = "zathura"
 			vim.g.vimtex_view_general_viewer = "zathura"
 			vim.g.vimtex_compiler_latexmk_engines = {
-				["_"] = "-xelatex",
+				-- ["_"] = "-xelatex",
+				["_"] = "-pdf",
 			}
 			vim.g.vimtex_compiler_latexrun_engines = {
-				["_"] = "xelatex",
+				-- ["_"] = "xelatex",
+				["_"] = "pdflatex",
 			}
 			vim.g.vimtex_quickfix_mode = 0
 			vim.opt.conceallevel = 1

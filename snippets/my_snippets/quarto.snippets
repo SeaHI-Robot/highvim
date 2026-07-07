@@ -25,10 +25,26 @@ snippet footer-custom "footer-custom tag for revealjs"
 	$0
 	:::
 
-snippet column "column tag for revealjs"
-	::: {.column width="50%"}
-	$0
-	:::
+snippet columns "column tag for revealjs"
+	<!-- Start -->
+    :::: {.columns}
+
+	<!-- left -->
+    ::: {.column width="40%"}
+    $1
+    :::
+
+	<!-- seperation -->
+    ::: {.column width="10%"}
+    :::
+
+	<!-- right -->
+    ::: {.column width="40%"}
+    $0
+    :::
+
+	<!-- End -->
+    ::::
 
 snippet scrollable "scrollable tag for revealjs"
 	::: {.scrollable}

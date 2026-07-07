@@ -1,7 +1,7 @@
 return {
 	{
 		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		lazy = true,
 		build = "cd app && yarn install",
 		-- build = function(plugin)
 		--     if vim.fn.executable "npx" then
@@ -15,6 +15,15 @@ return {
 			if vim.fn.executable("npx") then
 				vim.g.mkdp_filetypes = { "markdown" }
 			end
+			local function mkdp_command(name, fn_name)
+				vim.api.nvim_create_user_command(name, function()
+					require("lazy").load({ plugins = { "markdown-preview.nvim" } })
+					vim.fn["mkdp#util#" .. fn_name]()
+				end, { force = true })
+			end
+			mkdp_command("MarkdownPreview", "open_preview_page")
+			mkdp_command("MarkdownPreviewStop", "stop_preview")
+			mkdp_command("MarkdownPreviewToggle", "toggle_preview")
 		end,
 	},
 	{
