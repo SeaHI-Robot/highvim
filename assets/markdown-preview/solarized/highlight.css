@@ -1,0 +1,131 @@
+/* Solarized Light / Dark syntax highlighting */
+:root {
+  --hl-text: #586e75;
+  --hl-bg: #eee8d5;
+  --hl-comment: #586e75;
+  --hl-keyword: #859900;
+  --hl-number: #d33682;
+  --hl-string: #2aa198;
+  --hl-title: #268bd2;
+  --hl-type: #b58900;
+  --hl-tag: #cb4b16;
+  --hl-regexp: #2aa198;
+  --hl-symbol: #6c71c4;
+  --hl-builtin: #268bd2;
+  --hl-meta: #839496;
+  --hl-deletion-bg: #f6d8d3;
+  --hl-addition-bg: #dce6d5;
+}
+
+[data-theme="dark"] {
+  --hl-text: #839496;
+  --hl-bg: #073642;
+  --hl-comment: #586e75;
+  --hl-keyword: #859900;
+  --hl-number: #d33682;
+  --hl-string: #2aa198;
+  --hl-title: #268bd2;
+  --hl-type: #b58900;
+  --hl-tag: #cb4b16;
+  --hl-regexp: #2aa198;
+  --hl-symbol: #6c71c4;
+  --hl-builtin: #268bd2;
+  --hl-meta: #657b83;
+  --hl-deletion-bg: #4c2f32;
+  --hl-addition-bg: #213b36;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  border-radius: 6px;
+  color: var(--hl-text);
+  background: var(--hl-bg);
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--hl-comment);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: var(--hl-keyword);
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: var(--hl-number);
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: var(--hl-string);
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: var(--hl-title);
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: var(--hl-type);
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: var(--hl-tag);
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: var(--hl-regexp);
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: var(--hl-symbol);
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: var(--hl-builtin);
+}
+
+.hljs-meta {
+  color: var(--hl-meta);
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: var(--hl-deletion-bg);
+}
+
+.hljs-addition {
+  background: var(--hl-addition-bg);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}

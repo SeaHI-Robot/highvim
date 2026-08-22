@@ -14,7 +14,7 @@
 
 <br>
 
-![highvim-cover](./assets.README/highvim-cover.png)
+![highvim-cover](./assets/highvim-cover.png)
 
 ## :cherry_blossom: Introduction
 

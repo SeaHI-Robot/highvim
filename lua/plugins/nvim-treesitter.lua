@@ -6,13 +6,7 @@ return {
 			event = "VeryLazy",
 			enabled = true,
 			config = function()
-				require("nvim-treesitter-textobjects").setup({
-					move = {
-						set_jumps = true,
-					},
-				})
-
-				local move = require("nvim-treesitter-textobjects.move")
+				local move = require("nvim-treesitter.textobjects.move")
 				local modes = { "n", "x", "o" }
 				local function map_move(lhs, method, query)
 					vim.keymap.set(modes, lhs, function()
@@ -85,26 +79,8 @@ return {
 	end,
 	config = function(_, opts)
 		local treesitter = require("nvim-treesitter")
-		treesitter.setup(opts)
-
-		local ensure_installed = {
-			"c",
-			"lua",
-			"vim",
-			"cpp",
-			"python",
-			"markdown",
-			"markdown_inline",
-			"cmake",
-			"bash",
-			"html",
-			"javascript",
-		}
-		vim.schedule(function()
-			if vim.fn.executable("tree-sitter") == 1 then
-				treesitter.install(ensure_installed)
-			end
-		end)
+		treesitter.setup()
+		require("nvim-treesitter.configs").setup(opts)
 
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),
@@ -155,6 +131,18 @@ return {
 		end, { force = true })
 	end,
 	opts = {
-		install_dir = vim.fn.stdpath("data") .. "/site",
+		ensure_installed = {
+			"c",
+			"lua",
+			"vim",
+			"cpp",
+			"python",
+			"markdown",
+			"markdown_inline",
+			"cmake",
+			"bash",
+			"html",
+			"javascript",
+		},
 	},
 }
