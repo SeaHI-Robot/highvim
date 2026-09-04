@@ -1,9 +1,15 @@
 -- local markdown_preview_theme = "catppuccin" -- github, everforest, gruvbox-material, solarized
 local markdown_preview_theme = "everforest"
 local markdown_preview_header_position = "bottom" -- top or bottom
+local markdown_preview_toc = true -- show the Web UI table of contents
+local markdown_preview_toc_position = "left" -- left or right
 
 if markdown_preview_header_position ~= "top" and markdown_preview_header_position ~= "bottom" then
 	error("markdown_preview_header_position must be 'top' or 'bottom'")
+end
+
+if markdown_preview_toc_position ~= "left" and markdown_preview_toc_position ~= "right" then
+	error("markdown_preview_toc_position must be 'left' or 'right'")
 end
 
 -- Patch the legacy web bundle without pulling in its old Next.js toolchain.
@@ -291,10 +297,30 @@ local function patch_markdown_preview_webui(plugin_dir)
 		index_path,
 		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=9">'
 	)
+	local header_grace_style_removed = remove_all(
+		index_path,
+		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=10">'
+	)
 	local style_ok = ensure_before_once(
 		index_path,
 		"</head>",
-		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=10">'
+		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=15">'
+	)
+	local toc_style_removed = remove_all(
+		index_path,
+		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=11">'
+	)
+	local toc_hover_style_removed = remove_all(
+		index_path,
+		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=12">'
+	)
+	local toc_overlap_style_removed = remove_all(
+		index_path,
+		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=13">'
+	)
+	local toc_join_style_removed = remove_all(
+		index_path,
+		'<link rel="stylesheet" href="/_static/highvim-controls.css?v=14">'
 	)
 	local injected_favicon_removed = remove_all(
 		index_path,
@@ -340,6 +366,10 @@ local function patch_markdown_preview_webui(plugin_dir)
 		index_path,
 		'<script defer src="/_static/highvim-controls.js?v=10"></script>'
 	)
+	local header_grace_script_removed = remove_all(
+		index_path,
+		'<script defer src="/_static/highvim-controls.js?v=11"></script>'
+	)
 	local top_position_removed = remove_all(
 		index_path,
 		'<script>window.mkdpHeaderPosition="top"</script>'
@@ -353,10 +383,58 @@ local function patch_markdown_preview_webui(plugin_dir)
 		"</body>",
 		'<script>window.mkdpHeaderPosition="' .. markdown_preview_header_position .. '"</script>'
 	)
+	local toc_enabled_removed = remove_all(
+		index_path,
+		'<script>window.mkdpTocEnabled=true</script>'
+	)
+	local toc_disabled_removed = remove_all(
+		index_path,
+		'<script>window.mkdpTocEnabled=false</script>'
+	)
+	local toc_left_removed = remove_all(
+		index_path,
+		'<script>window.mkdpTocPosition="left"</script>'
+	)
+	local toc_right_removed = remove_all(
+		index_path,
+		'<script>window.mkdpTocPosition="right"</script>'
+	)
+	local legacy_toc_config_removed = true
+	for _, enabled in ipairs({ "true", "false" }) do
+		for _, position in ipairs({ "left", "right" }) do
+			legacy_toc_config_removed = remove_all(
+				index_path,
+				'<script>window.mkdpTocEnabled=' .. enabled
+					.. ';window.mkdpTocPosition="' .. position .. '"</script>'
+			) and legacy_toc_config_removed
+		end
+	end
+	local toc_enabled_ok = ensure_before_once(
+		index_path,
+		"</body>",
+		'<script>window.mkdpTocEnabled=' .. tostring(markdown_preview_toc) .. '</script>'
+	)
+	local toc_position_ok = ensure_before_once(
+		index_path,
+		"</body>",
+		'<script>window.mkdpTocPosition="' .. markdown_preview_toc_position .. '"</script>'
+	)
 	local script_ok = ensure_before_once(
 		index_path,
 		"</body>",
-		'<script defer src="/_static/highvim-controls.js?v=11"></script>'
+		'<script defer src="/_static/highvim-controls.js?v=15"></script>'
+	)
+	local initial_toc_script_removed = remove_all(
+		index_path,
+		'<script defer src="/_static/highvim-controls.js?v=12"></script>'
+	)
+	local toc_script_removed = remove_all(
+		index_path,
+		'<script defer src="/_static/highvim-controls.js?v=13"></script>'
+	)
+	local toc_focus_script_removed = remove_all(
+		index_path,
+		'<script defer src="/_static/highvim-controls.js?v=14"></script>'
 	)
 
 	local webui_assets = vim.fs.joinpath(vim.fn.stdpath("config"), "assets", "markdown-preview", "webui")
@@ -404,6 +482,11 @@ local function patch_markdown_preview_webui(plugin_dir)
 		or not latest_style_removed
 		or not compact_header_style_removed
 		or not detached_handles_style_removed
+		or not header_grace_style_removed
+		or not toc_style_removed
+		or not toc_hover_style_removed
+		or not toc_overlap_style_removed
+		or not toc_join_style_removed
 		or not legacy_script_removed
 		or not cached_script_removed
 		or not previous_script_removed
@@ -414,9 +497,20 @@ local function patch_markdown_preview_webui(plugin_dir)
 		or not compact_header_script_removed
 		or not detached_handles_script_removed
 		or not header_handles_script_removed
+		or not header_grace_script_removed
+		or not initial_toc_script_removed
+		or not toc_script_removed
+		or not toc_focus_script_removed
 		or not top_position_removed
 		or not bottom_position_removed
 		or not header_position_ok
+		or not toc_enabled_removed
+		or not toc_disabled_removed
+		or not toc_left_removed
+		or not toc_right_removed
+		or not legacy_toc_config_removed
+		or not toc_enabled_ok
+		or not toc_position_ok
 		or not style_ok
 		or not script_ok
 	then

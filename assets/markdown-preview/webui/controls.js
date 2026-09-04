@@ -5,6 +5,10 @@
   const headerPosition = window.mkdpHeaderPosition === "bottom" ? "bottom" : "top";
   document.documentElement.dataset.mkdpHeaderPosition = headerPosition;
 
+  const tocEnabled = window.mkdpTocEnabled === true;
+  const tocPosition = window.mkdpTocPosition === "left" ? "left" : "right";
+  document.documentElement.dataset.mkdpTocPosition = tocPosition;
+
   function ensureFavicon() {
     let icons = Array.from(document.querySelectorAll('link[rel~="icon"]'));
     if (icons.length === 0) {
@@ -70,6 +74,7 @@
     pageWidth = Math.max(minimumPageWidth, Math.min(upperBound, Math.round(value)));
     document.documentElement.style.setProperty("--mkdp-page-width", `${pageWidth}px`);
     updateWidthHandleState();
+    window.requestAnimationFrame(updateTocOverlap);
     if (persist) {
       try {
         window.localStorage.setItem(pageWidthKey, String(pageWidth));
@@ -289,7 +294,210 @@
 
   widthHandles = [createWidthHandle("left"), createWidthHandle("right")];
   updateWidthHandleState();
-  window.addEventListener("resize", updateWidthHandleState);
+  window.addEventListener("resize", () => {
+    updateWidthHandleState();
+    updateTocOverlap();
+  });
+
+  let toc = null;
+  let tocPanel = null;
+  let tocList = null;
+  let tocToggle = null;
+  let tocHeadings = [];
+  let observedMarkdown = null;
+  let markdownObserver = null;
+  let tocRebuildFrame = null;
+  let tocScrollFrame = null;
+  let isTocOpen = false;
+  let tocHeld = false;
+  let tocHideTimer = null;
+
+  function updateTocOverlap() {
+    if (!toc) return;
+    const page = document.getElementById("page-ctn");
+    if (!page) return;
+    const bounds = page.getBoundingClientRect();
+    const tocClearance = 44;
+    const overlaps = tocPosition === "left"
+      ? bounds.left < tocClearance
+      : bounds.right > window.innerWidth - tocClearance;
+    toc.classList.toggle("mkdp-toc--overlap", overlaps);
+  }
+
+  function setTocOpen(open) {
+    isTocOpen = open;
+    toc?.classList.toggle("mkdp-toc--open", open);
+    tocPanel?.setAttribute("aria-hidden", String(!open));
+    if (tocList) tocList.inert = !open;
+    tocToggle?.setAttribute("aria-expanded", String(open));
+    tocToggle?.setAttribute("aria-label", open ? "Close table of contents" : "Open table of contents");
+    tocToggle?.setAttribute("title", open ? "Close table of contents" : "Open table of contents");
+  }
+
+  function showToc() {
+    window.clearTimeout(tocHideTimer);
+    setTocOpen(true);
+  }
+
+  function scheduleTocHide() {
+    window.clearTimeout(tocHideTimer);
+    tocHideTimer = window.setTimeout(() => {
+      const focusedElement = document.activeElement;
+      const hasKeyboardFocus = toc?.contains(focusedElement) && focusedElement.matches(":focus-visible");
+      if (!tocHeld && !toc?.matches(":hover") && !hasKeyboardFocus) {
+        setTocOpen(false);
+      }
+    }, 180);
+  }
+
+  function makeTocIcon() {
+    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    icon.setAttribute("viewBox", "0 0 24 24");
+    icon.setAttribute("aria-hidden", "true");
+    icon.innerHTML = '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>';
+    return icon;
+  }
+
+  function createToc() {
+    toc = document.createElement("aside");
+    toc.id = "mkdp-toc";
+    toc.setAttribute("aria-label", "Table of contents");
+
+    tocPanel = document.createElement("div");
+    tocPanel.className = "mkdp-toc-panel";
+
+    const heading = document.createElement("div");
+    heading.className = "mkdp-toc-heading";
+    // const eyebrow = document.createElement("span");
+    // eyebrow.textContent = "ON THIS PAGE";
+    const title = document.createElement("strong");
+    title.textContent = "Table of Contents";
+    // heading.append(eyebrow, title);
+    heading.append(title);
+
+    tocList = document.createElement("nav");
+    tocList.className = "mkdp-toc-list";
+    tocList.setAttribute("aria-label", "Document sections");
+
+    tocToggle = document.createElement("button");
+    tocToggle.type = "button";
+    tocToggle.className = "mkdp-toc-toggle";
+    tocToggle.append(makeTocIcon());
+    tocToggle.addEventListener("mouseenter", showToc);
+    tocToggle.addEventListener("mouseleave", scheduleTocHide);
+    tocToggle.addEventListener("click", () => {
+      tocHeld = !tocHeld;
+      showToc();
+      tocToggle.setAttribute("data-held", String(tocHeld));
+      tocToggle.setAttribute("title", tocHeld ? "Release table of contents" : "Auto-hide table of contents");
+    });
+    toc.addEventListener("mouseenter", showToc);
+    toc.addEventListener("mouseleave", scheduleTocHide);
+
+    tocPanel.append(heading, tocList);
+    toc.append(tocPanel, tocToggle);
+    document.body.append(toc);
+    setTocOpen(false);
+    updateTocOverlap();
+  }
+
+  function ensureHeadingId(heading, index, usedIds) {
+    if (heading.id && !usedIds.has(heading.id)) {
+      usedIds.add(heading.id);
+      return heading.id;
+    }
+    const base = heading.textContent
+      .trim()
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}]+/gu, "-")
+      .replace(/^-|-$/g, "") || `section-${index + 1}`;
+    let id = base;
+    let suffix = 2;
+    while (usedIds.has(id) || document.getElementById(id)) id = `${base}-${suffix++}`;
+    heading.id = id;
+    usedIds.add(id);
+    return id;
+  }
+
+  function updateActiveTocItem() {
+    tocScrollFrame = null;
+    if (tocHeadings.length === 0) return;
+    const marker = Math.min(160, window.innerHeight * 0.24);
+    let activeIndex = 0;
+    for (let index = 0; index < tocHeadings.length; index += 1) {
+      if (tocHeadings[index].getBoundingClientRect().top <= marker) activeIndex = index;
+      else break;
+    }
+    const links = tocList.querySelectorAll("a");
+    links.forEach((link, index) => {
+      const active = index === activeIndex;
+      link.classList.toggle("mkdp-toc-link--active", active);
+      if (active) {
+        link.setAttribute("aria-current", "location");
+        if (isTocOpen) link.scrollIntoView({ block: "nearest" });
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  function rebuildToc() {
+    tocRebuildFrame = null;
+    if (!observedMarkdown || !tocList) return;
+    tocHeadings = Array.from(observedMarkdown.querySelectorAll("h1, h2, h3, h4, h5, h6"));
+    const usedIds = new Set();
+    const fragment = document.createDocumentFragment();
+    tocHeadings.forEach((heading, index) => {
+      const id = ensureHeadingId(heading, index, usedIds);
+      const link = document.createElement("a");
+      link.href = `#${encodeURIComponent(id)}`;
+      link.className = "mkdp-toc-link";
+      link.dataset.level = heading.tagName.slice(1);
+      link.textContent = heading.textContent.trim();
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        heading.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#${encodeURIComponent(id)}`);
+        link.blur();
+        if (window.innerWidth <= 760) setTocOpen(false);
+        else if (!tocHeld) scheduleTocHide();
+      });
+      fragment.append(link);
+    });
+    tocList.replaceChildren(fragment);
+    toc.classList.toggle("mkdp-toc--empty", tocHeadings.length === 0);
+    updateActiveTocItem();
+  }
+
+  function scheduleTocRebuild() {
+    if (tocRebuildFrame !== null) return;
+    tocRebuildFrame = window.requestAnimationFrame(rebuildToc);
+  }
+
+  function observeMarkdown(markdown) {
+    if (markdown === observedMarkdown) return;
+    markdownObserver?.disconnect();
+    observedMarkdown = markdown;
+    if (!markdown) return;
+    markdownObserver = new MutationObserver(scheduleTocRebuild);
+    markdownObserver.observe(markdown, { childList: true, subtree: true, characterData: true });
+    scheduleTocRebuild();
+  }
+
+  if (tocEnabled) {
+    createToc();
+    window.addEventListener("scroll", () => {
+      if (tocScrollFrame === null) tocScrollFrame = window.requestAnimationFrame(updateActiveTocItem);
+    }, { passive: true });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isTocOpen) {
+        tocHeld = false;
+        setTocOpen(false);
+        tocToggle.setAttribute("data-held", "false");
+        tocToggle.focus();
+      }
+    });
+  }
 
   function mountControl() {
     ensureFavicon();
@@ -297,6 +505,11 @@
     const page = document.getElementById("page-ctn");
     const target = header || page;
     if (!target) return;
+
+    if (tocEnabled) {
+      observeMarkdown(page.querySelector(".markdown-body"));
+      window.requestAnimationFrame(updateTocOverlap);
+    }
 
     const themeControl = document.getElementById("toggle-theme");
     const themeInput = document.getElementById("theme");
